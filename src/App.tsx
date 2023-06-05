@@ -1,6 +1,6 @@
 import "./App.css"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import { Counter } from "features/counter/Counter"
+import { Counter } from "./features/counter/Counter"
 
 const router = createBrowserRouter([
   {
