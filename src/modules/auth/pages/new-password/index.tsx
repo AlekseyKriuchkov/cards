@@ -1,5 +1,5 @@
 import React from "react"
 
 export const NewPassword = () => {
-  return <div></div>
+  return <div>NewPassword</div>
 }

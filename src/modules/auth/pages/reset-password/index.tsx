@@ -1,5 +1,5 @@
 import React from "react"
 
 export const ResetPassword = () => {
-  return <div></div>
+  return <div>ResetPassword</div>
 }
