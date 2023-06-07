@@ -12,7 +12,7 @@ import {
 import { ErrorPage } from "@/modules/auth/pages/error404"
 
 export const route = () => {
-  const router = createBrowserRouter([
+  return createBrowserRouter([
     {
       path: "/",
       element: <Counter />,
@@ -50,5 +50,4 @@ export const route = () => {
       element: <ErrorPage />,
     },
   ])
-  return router
 }
