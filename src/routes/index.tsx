@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom"
-import { Counter } from "@/features/counter/Counter"
 import {
   CheckEmail,
   ForgotPassword,
@@ -15,7 +14,7 @@ export const route = () => {
   return createBrowserRouter([
     {
       path: "/",
-      element: <Counter />,
+      element: <SignIn />,
     },
     {
       path: "/check-email",
