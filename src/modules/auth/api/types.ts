@@ -14,6 +14,21 @@ export type User = {
   __v: number
 }
 
+export type LoginResponse = {
+  _id: string
+  email: string
+  rememberMe: boolean
+  isAdmin: boolean
+  name: string
+  verified: boolean
+  publicCardPacksCount: number
+  created: string
+  updated: string
+  __v: number
+  token: string
+  tokenDeathTime: number
+}
+
 export type RegisterType = {
   email: string
   password: string

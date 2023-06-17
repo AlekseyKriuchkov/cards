@@ -11,7 +11,13 @@ export const SignIn = () => {
     setTimeout(() => {
       dispatch(appActions.setIsLoading({ isLoading: false }))
     }, 3000)
-    dispatch(authThunk.register())
+    dispatch(
+      authThunk.login({
+        email: "99pozit32iv11@mail.ru",
+        password: "qwer1thyui",
+        rememberMe: true,
+      }),
+    )
   }, [])
 
   return (
