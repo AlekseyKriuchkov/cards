@@ -1,17 +1,19 @@
 import React, { useEffect } from "react"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import { authActions, isLoading } from "@/modules/auth/auth.slice"
-import { instance } from "@/modules/auth/api/instance"
+import { appActions, isLoading } from "@/app/app.slice"
+import { authApi } from "@/modules/auth/api/auth.api"
 
 export const SignIn = () => {
   const dispatch = useAppDispatch()
   const isLoading2 = useAppSelector(isLoading)
 
+  const { register } = authApi()
+
   useEffect(() => {
     setTimeout(() => {
-      dispatch(authActions.setIsLoading({ isLoading: false }))
+      dispatch(appActions.setIsLoading({ isLoading: false }))
     }, 3000)
-    instance.get("ping")
+    register({ email: "99popopo@mail.ru", password: "12345678" })
   }, [])
 
   return (
