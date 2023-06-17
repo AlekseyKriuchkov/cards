@@ -18,7 +18,7 @@ const slice = createSlice({
   },
 })
 
-export const isLoading = (state: RootState) => state
+export const isLoading = (state: RootState) => state.app.isLoading
 
 export const appReducer = slice.reducer
 
