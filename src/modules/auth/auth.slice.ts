@@ -12,6 +12,11 @@ const login = createAsyncThunk("auth/login", (arg: LoginType) => {
     console.log(res)
   })
 })
+const authMe = createAsyncThunk("authMe/login", () => {
+  authApi.authMe().then((res) => {
+    console.log(res)
+  })
+})
 
 const slice = createSlice({
   name: "auth",
@@ -21,4 +26,4 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer
 
-export const authThunk = { register, login }
+export const authThunk = { register, login, authMe }

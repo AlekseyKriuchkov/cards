@@ -3,6 +3,7 @@ import {
   AuthMeUpdate,
   LoginResponse,
   LoginType,
+  MeResponse,
   RegisterResponse,
   RegisterType,
 } from "@/modules/auth/api/types"
@@ -14,8 +15,8 @@ export const authApi = {
   login: (params: LoginType) => {
     return authInstance.post<LoginResponse>("login", params)
   },
-  authMe: (params: any) => {
-    return authInstance.post(params)
+  authMe: () => {
+    return authInstance.post<MeResponse>("me")
   },
   authMeUpdate: (params: AuthMeUpdate) => {
     return authInstance.put("me", params)
