@@ -1,3 +1,11 @@
+export type ErrorType = {
+  emailRegExp: {}
+  error: string
+  in: string
+  isEmailValid: boolean
+  isPassValid: boolean
+  passwordRegExp: string
+}
 export type User = {
   _id: string
   email: string
@@ -8,14 +16,12 @@ export type User = {
   publicCardPacksCount: number
   created: string
   updated: string
+  token: string
+  tokenDeathTime: number
   __v: number
 }
 export type RegisterResponse = {
   addedUser: User
-}
-export type LoginResponse = User & {
-  token: string
-  tokenDeathTime: number
 }
 export type MeResponse = Omit<User, "__v"> & AuthMeUpdate
 export type AuthMeUpdate = {

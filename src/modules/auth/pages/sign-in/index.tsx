@@ -3,14 +3,25 @@ import { authThunk } from "@/modules/auth/auth.slice"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Form, Input, Button, Checkbox } from "antd"
 import { LoginType } from "@/modules/auth/api/types"
+import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useAuth } from "@/modules/auth/hooks/useAuth"
 
 export const SignIn = () => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const onFinish = (values: LoginType) => {
+  const { user } = useAuth()
+
+  useEffect(() => {
+    if (user) {
+      navigate("profile")
+    }
+  }, [user])
+
+  const onFinish = async (values: LoginType) => {
     dispatch(authThunk.login(values))
   }
-
   return (
     <StyledCard title={"Sign In"}>
       <Form name="basic" onFinish={onFinish} autoComplete="off">

@@ -1,25 +1,30 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { authApi } from "@/modules/auth/api/auth.api"
 import {
-  LoginResponse,
+  ErrorType,
   LoginType,
   RegisterType,
+  User,
 } from "@/modules/auth/api/types"
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
-
+import { AxiosError } from "axios"
 const register = createAppAsyncThunk("auth/register", (arg: RegisterType) => {
   authApi.register(arg).then((res) => {
     console.log(res)
   })
 })
-const login = createAppAsyncThunk<{ profile: LoginResponse }, LoginType>(
-  "auth/login",
-  async (arg) => {
-    const response = await authApi.login(arg)
-    console.log(response.data)
-    return { profile: response.data }
-  },
-)
+const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
+  return authApi
+    .login(arg)
+    .then((response) => {
+      console.log(response.data)
+      return { user: response.data }
+    })
+    .catch((e) => {
+      const error = e as AxiosError<ErrorType>
+      console.log(error?.response?.data.error)
+    })
+})
 const authMe = createAppAsyncThunk("authMe/login", () => {
   authApi.authMe().then((res) => {
     console.log(res)
@@ -29,12 +34,13 @@ const authMe = createAppAsyncThunk("authMe/login", () => {
 const slice = createSlice({
   name: "auth",
   initialState: {
-    profile: null as LoginResponse | null,
+    user: null as User | null,
   },
-  reducers: {
-    setProfile: (state, action: PayloadAction<{ profile: LoginResponse }>) => {
-      state.profile = action.payload.profile
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      if (action.payload?.user) state.user = action.payload.user
+    })
   },
 })
 

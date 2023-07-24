@@ -1,11 +1,11 @@
 import { authInstance } from "@/modules/auth/api/auth.instance"
 import {
   AuthMeUpdate,
-  LoginResponse,
   LoginType,
   MeResponse,
   RegisterResponse,
   RegisterType,
+  User,
 } from "@/modules/auth/api/types"
 
 export const authApi = {
@@ -13,7 +13,7 @@ export const authApi = {
     return authInstance.post<RegisterResponse>("register", params)
   },
   login: (params: LoginType) => {
-    return authInstance.post<LoginResponse>("login", params)
+    return authInstance.post<User>("login", params)
   },
   authMe: () => {
     return authInstance.post<MeResponse>("me")
