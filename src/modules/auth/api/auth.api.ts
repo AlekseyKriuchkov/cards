@@ -15,6 +15,9 @@ export const authApi = {
   login: (params: LoginType) => {
     return authInstance.post<User>("login", params)
   },
+  authMeLogOut: (params: {}) => {
+    return authInstance.delete("me", params)
+  },
   authMe: () => {
     return authInstance.post<MeResponse>("me")
   },

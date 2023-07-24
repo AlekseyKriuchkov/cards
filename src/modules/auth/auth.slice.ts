@@ -16,14 +16,19 @@ const register = createAppAsyncThunk("auth/register", (arg: RegisterType) => {
 const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
   return authApi
     .login(arg)
-    .then((response) => {
-      console.log(response.data)
-      return { user: response.data }
+    .then((res) => {
+      console.log(res.data)
+      return { user: res.data }
     })
     .catch((e) => {
       const error = e as AxiosError<ErrorType>
       console.log(error?.response?.data.error)
     })
+})
+const LogOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
+  return authApi.authMeLogOut(arg).then((res) => {
+    console.log(res)
+  })
 })
 const authMe = createAppAsyncThunk("authMe/login", () => {
   authApi.authMe().then((res) => {
@@ -41,6 +46,9 @@ const slice = createSlice({
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
     })
+    builder.addCase(LogOut.fulfilled, (state) => {
+      state.user = null
+    })
   },
 })
 
@@ -48,4 +56,4 @@ export const authReducer = slice.reducer
 
 export const authActions = slice.actions
 
-export const authThunk = { register, login, authMe }
+export const authThunk = { register, login, LogOut, authMe }

@@ -11,13 +11,13 @@ export const SignIn = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { user } = useAuth()
+  const { isAuthorized } = useAuth()
 
   useEffect(() => {
-    if (user) {
-      navigate("profile")
+    if (isAuthorized) {
+      navigate("/profile")
     }
-  }, [user])
+  }, [isAuthorized])
 
   const onFinish = async (values: LoginType) => {
     dispatch(authThunk.login(values))

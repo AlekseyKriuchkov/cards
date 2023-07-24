@@ -12,10 +12,10 @@ import { ErrorPage } from "@/modules/auth/pages/error404"
 
 export const route = () => {
   return createBrowserRouter([
-    {
-      path: "/",
-      element: <SignIn />,
-    },
+    // {
+    //   path: "/",
+    //   element: <SignIn />,
+    // },
     {
       path: "/check-email",
       element: <CheckEmail />,
