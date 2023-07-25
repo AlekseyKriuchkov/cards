@@ -47,7 +47,7 @@ export const SignIn = () => {
 
         <Form.Item>
           <Button type="primary" htmlType="submit" size={"large"} block={true}>
-            Submit
+            Sign In
           </Button>
         </Form.Item>
         <StyledForgotPasswordLink to={"/reset-password"}>

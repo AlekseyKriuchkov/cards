@@ -21,7 +21,18 @@ export type User = {
   __v: number
 }
 export type RegisterResponse = {
-  addedUser: User
+  addedUser: {
+    created: string
+    email: string
+    isAdmin: boolean
+    name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    updated: string
+    verified: boolean
+    __v: number
+    _id: string
+  }
 }
 export type MeResponse = Omit<User, "__v"> & AuthMeUpdate
 export type AuthMeUpdate = {
