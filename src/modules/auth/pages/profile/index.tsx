@@ -21,7 +21,7 @@ export const Profile = () => {
   const navigate = useNavigate()
 
   const logOut = async () => {
-    dispatch(authThunk.LogOut({}))
+    dispatch(authThunk.logOut({}))
   }
 
   useEffect(() => {

@@ -1,11 +1,15 @@
 import { useAppDispatch } from "@/app/hooks"
 import { authThunk } from "@/modules/auth/auth.slice"
-import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
+import {
+  StyledCard,
+  StyledForgotPasswordLink,
+} from "@/modules/auth/pages/sign-in/styles"
 import { Form, Input, Button, Checkbox } from "antd"
 import { LoginType } from "@/modules/auth/api/types"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
+import { StyledNavLink } from "@/modules/auth/styles"
 
 export const SignIn = () => {
   const dispatch = useAppDispatch()
@@ -46,6 +50,10 @@ export const SignIn = () => {
             Submit
           </Button>
         </Form.Item>
+        <StyledForgotPasswordLink to={"/reset-password"}>
+          Forgot password?
+        </StyledForgotPasswordLink>
+        <StyledNavLink to={"/sign-up"}>Sign Up</StyledNavLink>
       </Form>
     </StyledCard>
   )

@@ -4,7 +4,7 @@ import { Card } from "antd"
 
 export const StyledForgotPasswordLink = styled(NavLink)`
   display: block;
-  margin-left: 65%;
+  text-align: center;
   color: black;
   font-size: 0.85rem;
   font-weight: 500;

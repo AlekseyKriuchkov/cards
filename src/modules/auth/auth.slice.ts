@@ -9,8 +9,8 @@ import {
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { AxiosError } from "axios"
 const register = createAppAsyncThunk("auth/register", (arg: RegisterType) => {
-  authApi.register(arg).then((res) => {
-    console.log(res)
+  return authApi.register(arg).then((res) => {
+    return { user: res.data }
   })
 })
 const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
@@ -25,7 +25,7 @@ const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
       console.log(error?.response?.data.error)
     })
 })
-const LogOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
+const logOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
   return authApi.authMeLogOut(arg).then((res) => {
     console.log(res)
   })
@@ -43,10 +43,11 @@ const slice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(register.fulfilled, (state, action) => {})
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
     })
-    builder.addCase(LogOut.fulfilled, (state) => {
+    builder.addCase(logOut.fulfilled, (state) => {
       state.user = null
     })
   },
@@ -56,4 +57,4 @@ export const authReducer = slice.reducer
 
 export const authActions = slice.actions
 
-export const authThunk = { register, login, LogOut, authMe }
+export const authThunk = { register, login, logOut, authMe }
