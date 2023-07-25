@@ -25,7 +25,7 @@ export const route = () => {
       element: <ForgotPassword />,
     },
     {
-      path: "/new-password",
+      path: "/set-new-password/:token",
       element: <NewPassword />,
     },
     {

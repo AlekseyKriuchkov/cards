@@ -45,3 +45,8 @@ export type LoginType = {
   rememberMe: boolean
 }
 export type RegisterType = Omit<LoginType, "rememberMe">
+export type ForgotPasswordType = {
+  email: string
+  from?: string
+  message: string
+}

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { authApi } from "@/modules/auth/api/auth.api"
 import {
   ErrorType,
+  ForgotPasswordType,
   LoginType,
   RegisterType,
   User,
@@ -36,11 +37,20 @@ const authMe = createAppAsyncThunk("authMe/login", () => {
     console.log(res)
   })
 })
+const forgot = createAppAsyncThunk(
+  "authMe/forgot",
+  (arg: ForgotPasswordType) => {
+    return authApi.forgot(arg).then((res) => {
+      return { isSuccess: true }
+    })
+  },
+)
 
 const slice = createSlice({
   name: "auth",
   initialState: {
     user: null as User | null,
+    isSuccess: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -50,6 +60,9 @@ const slice = createSlice({
     builder.addCase(logOut.fulfilled, (state) => {
       state.user = null
     })
+    builder.addCase(forgot.fulfilled, (state, action) => {
+      if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+    })
   },
 })
 
@@ -57,4 +70,4 @@ export const authReducer = slice.reducer
 
 export const authActions = slice.actions
 
-export const authThunk = { register, login, logOut, authMe }
+export const authThunk = { register, login, logOut, authMe, forgot }

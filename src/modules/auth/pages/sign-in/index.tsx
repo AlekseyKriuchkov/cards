@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/app/hooks"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { authThunk } from "@/modules/auth/auth.slice"
 import {
   StyledCard,
@@ -22,6 +22,10 @@ export const SignIn = () => {
       navigate("/profile")
     }
   }, [isAuthorized])
+
+  const isSuccess = useAppSelector((state) => state.auth.isSuccess)
+
+  console.log(isSuccess)
 
   const onFinish = async (values: LoginType) => {
     dispatch(authThunk.login(values))
@@ -50,7 +54,7 @@ export const SignIn = () => {
             Sign In
           </Button>
         </Form.Item>
-        <StyledForgotPasswordLink to={"/reset-password"}>
+        <StyledForgotPasswordLink to={"/forgot-password"}>
           Forgot password?
         </StyledForgotPasswordLink>
         <StyledNavLink to={"/sign-up"}>Sign Up</StyledNavLink>
