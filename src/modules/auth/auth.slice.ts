@@ -11,9 +11,8 @@ import {
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { AxiosError } from "axios"
 const register = createAppAsyncThunk("auth/register", (arg: RegisterType) => {
-  return authApi.register(arg).then((res) => {
-    console.log(res.data.addedUser)
-    return { user: res.data.addedUser }
+  return authApi.register(arg).then(() => {
+    return { isSuccess: true }
   })
 })
 const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
@@ -41,7 +40,7 @@ const authMe = createAppAsyncThunk("authMe/login", () => {
 const forgot = createAppAsyncThunk(
   "authMe/forgot",
   (arg: ForgotPasswordType) => {
-    return authApi.forgot(arg).then((res) => {
+    return authApi.forgot(arg).then(() => {
       return { isSuccess: true }
     })
   },
@@ -49,7 +48,7 @@ const forgot = createAppAsyncThunk(
 const newPassword = createAppAsyncThunk(
   "authMe/newPassword",
   (arg: NewPasswordType) => {
-    return authApi.setNewPassword(arg).then((res) => {
+    return authApi.setNewPassword(arg).then(() => {
       return { isSuccess: true }
     })
   },
@@ -66,6 +65,9 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(register.fulfilled, (state, action) => {
+      if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+    })
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
     })
