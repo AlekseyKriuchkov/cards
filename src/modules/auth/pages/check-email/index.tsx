@@ -1,14 +1,27 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form } from "antd"
 import { useNavigate } from "react-router-dom"
-import { useAppSelector } from "@/app/hooks"
-
+import { StyledCheckEmailImage } from "@/modules/auth/pages/check-email/styles"
+import checkEmailImage from "@/assets/check-email-image.svg"
+import { StyledText } from "@/modules/auth/pages/styles"
+import { useAppDispatch } from "@/app/hooks"
+import { setIsSuccess } from "@/modules/auth/auth.slice"
 export const CheckEmail = () => {
   const navigate = useNavigate()
-  const isSuccess = useAppSelector((state) => state.auth.isSuccess)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(setIsSuccess(false))
+    setTimeout((args) => {
+      navigate("/sign-in")
+    }, 5000)
+  }, [])
+
   return (
     <StyledCard title={"Check Email"}>
+      <StyledCheckEmailImage src={checkEmailImage} alt="image" />
+      <StyledText>We’ve sent an Email with instructions to</StyledText>
       <Form.Item>
         <Button
           onClick={() => {

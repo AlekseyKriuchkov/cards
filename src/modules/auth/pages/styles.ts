@@ -19,6 +19,7 @@ export const StyledP = styled.p`
 `
 export const StyledText = styled(Text)`
   display: flex;
+  justify-content: center;
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 3rem;

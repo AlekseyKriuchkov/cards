@@ -5,7 +5,7 @@ import { authThunk } from "@/modules/auth/auth.slice"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form, Input } from "antd"
 import { StyledNavLink } from "@/modules/auth/styles"
-import { StyledP, StyledText } from "@/modules/auth/pages/style"
+import { StyledP, StyledText } from "@/modules/auth/pages/styles"
 import { CheckEmail } from "@/modules/auth/pages"
 
 export const ForgotPassword = () => {
@@ -38,7 +38,7 @@ link</a>
           </Button>
         </Form.Item>
         <StyledP>Did you remember your password?</StyledP>
-        <StyledNavLink to={"/sign-in"}>Sign Up</StyledNavLink>
+        <StyledNavLink to={"/sign-in"}>Sign In</StyledNavLink>
       </Form>
     </StyledCard>
   )

@@ -4,6 +4,7 @@ import {
   ForgotPasswordType,
   LoginType,
   MeResponse,
+  NewPasswordType,
   RegisterResponse,
   RegisterType,
   User,
@@ -27,5 +28,8 @@ export const authApi = {
   },
   forgot: (params: ForgotPasswordType) => {
     return authInstance.post("forgot", params)
+  },
+  setNewPassword: (params: NewPasswordType) => {
+    return authInstance.post("set-new-password", params)
   },
 }

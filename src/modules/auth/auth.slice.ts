@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { authApi } from "@/modules/auth/api/auth.api"
 import {
   ErrorType,
   ForgotPasswordType,
   LoginType,
+  NewPasswordType,
   RegisterType,
   User,
 } from "@/modules/auth/api/types"
@@ -45,14 +46,25 @@ const forgot = createAppAsyncThunk(
     })
   },
 )
-
+const newPassword = createAppAsyncThunk(
+  "authMe/newPassword",
+  (arg: NewPasswordType) => {
+    return authApi.setNewPassword(arg).then((res) => {
+      return { isSuccess: true }
+    })
+  },
+)
 const slice = createSlice({
   name: "auth",
   initialState: {
     user: null as User | null,
-    isSuccess: false,
+    isSuccess: false as boolean,
   },
-  reducers: {},
+  reducers: {
+    setIsSuccess: (state, action: PayloadAction<boolean>) => {
+      state.isSuccess = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
@@ -63,11 +75,21 @@ const slice = createSlice({
     builder.addCase(forgot.fulfilled, (state, action) => {
       if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
     })
+    builder.addCase(newPassword.fulfilled, (state, action) => {
+      if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+    })
   },
 })
 
 export const authReducer = slice.reducer
 
-export const authActions = slice.actions
+export const { setIsSuccess } = slice.actions
 
-export const authThunk = { register, login, logOut, authMe, forgot }
+export const authThunk = {
+  register,
+  login,
+  logOut,
+  authMe,
+  forgot,
+  newPassword,
+}

@@ -50,3 +50,7 @@ export type ForgotPasswordType = {
   from?: string
   message: string
 }
+export type NewPasswordType = {
+  password: string
+  resetPasswordToken: string | undefined
+}
