@@ -23,7 +23,6 @@ export const Profile = () => {
   const logOut = async () => {
     dispatch(authThunk.logOut({}))
   }
-  console.log(isAuthorized)
   useEffect(() => {
     if (!isAuthorized) navigate("/sign-in")
   }, [isAuthorized])

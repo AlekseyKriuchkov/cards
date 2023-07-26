@@ -12,8 +12,8 @@ export const CheckEmail = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(setIsSuccess(false))
-    setTimeout((args) => {
+    setTimeout(() => {
+      dispatch(setIsSuccess(false))
       navigate("/sign-in")
     }, 5000)
   }, [])

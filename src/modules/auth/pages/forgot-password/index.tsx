@@ -11,9 +11,9 @@ import { CheckEmail } from "@/modules/auth/pages"
 export const ForgotPassword = () => {
   const dispatch = useAppDispatch()
   const isSuccess = useAppSelector((state) => state.auth.isSuccess)
-  const message = `<div style="background-color: lime; padding: 15px">
+  const message = `<div style="background-color: aqua; padding: 15px">
 password recovery link: 
-<a href='http://localhost:5174/#/set-new-password/$token$'>
+<a href='http://localhost:5174/set-new-password/$token$'>
 link</a>
 </div>`
   const onFinish = async (values: LoginType) => {

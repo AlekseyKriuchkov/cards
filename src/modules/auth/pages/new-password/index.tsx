@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form, Input } from "antd"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import { authThunk, setIsSuccess } from "@/modules/auth/auth.slice"
+import { authThunk } from "@/modules/auth/auth.slice"
 import { NewPasswordType } from "@/modules/auth/api/types"
 
 export const NewPassword = () => {
@@ -16,8 +16,7 @@ export const NewPassword = () => {
     dispatch(authThunk.newPassword({ ...values, resetPasswordToken: token }))
   }
   if (isSuccess) {
-    navigate("/profile")
-    dispatch(setIsSuccess(false))
+    navigate("/sign-in")
   }
 
   return (
