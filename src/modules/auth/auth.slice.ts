@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { authApi } from "@/modules/auth/api/auth.api"
 import {
+  AuthMeUpdate,
   ErrorType,
   ForgotPasswordType,
   LoginType,
@@ -32,11 +33,20 @@ const logOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
     console.log(res)
   })
 })
-const authMe = createAppAsyncThunk("authMe/login", () => {
+const authMe = createAppAsyncThunk("authMe/login", async () => {
   authApi.authMe().then((res) => {
     console.log(res)
   })
 })
+const authMeUpdate = createAppAsyncThunk(
+  "authMe/login",
+  async (arg: AuthMeUpdate) => {
+    return authApi.authMeUpdate(arg).then((res) => {
+      console.log(res)
+      return { user: res.data }
+    })
+  },
+)
 const forgot = createAppAsyncThunk(
   "authMe/forgot",
   (arg: ForgotPasswordType) => {
@@ -69,6 +79,9 @@ const slice = createSlice({
       if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
     })
     builder.addCase(login.fulfilled, (state, action) => {
+      if (action.payload?.user) state.user = action.payload.user
+    })
+    builder.addCase(authMeUpdate.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
     })
     builder.addCase(logOut.fulfilled, (state) => {

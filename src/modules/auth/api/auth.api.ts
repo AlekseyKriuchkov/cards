@@ -24,7 +24,7 @@ export const authApi = {
     return authInstance.post<MeResponse>("me")
   },
   authMeUpdate: (params: AuthMeUpdate) => {
-    return authInstance.put("me", params)
+    return authInstance.put<User>("me", params)
   },
   forgot: (params: ForgotPasswordType) => {
     return authInstance.post("forgot", params)
