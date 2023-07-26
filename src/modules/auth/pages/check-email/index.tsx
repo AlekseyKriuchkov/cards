@@ -12,10 +12,11 @@ export const CheckEmail = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       dispatch(setIsSuccess(false))
       navigate("/sign-in")
     }, 5000)
+    return clearTimeout(timer)
   }, [])
 
   return (
