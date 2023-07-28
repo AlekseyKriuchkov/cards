@@ -8,6 +8,7 @@ import {
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button"
+import { ProfileAvatar } from "@/modules/auth/components/profile-avatar"
 
 export const Profile = () => {
   const { isAuthorized } = useAuth()
@@ -17,10 +18,11 @@ export const Profile = () => {
   useEffect(() => {
     if (!isAuthorized) navigate("/sign-in")
   }, [isAuthorized])
-
+  console.log(user)
   return (
     <StyledCard title={"Personal information"}>
       <StyledProfileContainer>
+        <ProfileAvatar />
         <StyledUserName>{user?.name}</StyledUserName>
         <StyledProfileText>{user?.email}</StyledProfileText>
         <ProfileLogOutButton />

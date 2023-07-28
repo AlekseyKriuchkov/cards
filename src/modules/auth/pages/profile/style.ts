@@ -1,4 +1,6 @@
 import { Button, Typography } from "antd"
+import { CloseCircleTwoTone, UserOutlined } from "@ant-design/icons"
+import { Avatar } from "antd"
 import styled from "styled-components"
 
 export const { Text } = Typography
@@ -42,4 +44,32 @@ export const StyledUserName = styled.span<UserNameProps>`
   cursor: pointer;
   text-align: center;
   word-break: ${(props) => props.wordBreak};
+`
+export const StyledCloseCircleTwoTone = styled(CloseCircleTwoTone)`
+  position: absolute;
+  right: -0.25rem;
+  top: -0.25rem;
+
+  :hover {
+    font-size: 1rem;
+  }
+`
+export const StyledAvatarGroup = styled(Avatar.Group)`
+  margin-bottom: 1.7rem;
+  position: relative;
+
+  & :hover {
+    cursor: pointer;
+  }
+`
+export const StyledUserOutlined = styled(UserOutlined)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  width: 94px;
+  height: 94px;
+  color: rgb(179, 205, 252);
+  border: 1px solid rgb(179, 205, 252);
+  border-radius: 8px;
 `
