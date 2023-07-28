@@ -73,3 +73,11 @@ export const StyledUserOutlined = styled(UserOutlined)`
   border: 1px solid rgb(179, 205, 252);
   border-radius: 8px;
 `
+export const StyledProfileWidgetAvatar = styled.img.attrs({
+  alt: "avatar",
+})`
+  margin-right: 7px;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+`

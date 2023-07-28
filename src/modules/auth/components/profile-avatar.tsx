@@ -3,6 +3,7 @@ import { Avatar, Upload } from "antd"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import {
   StyledAvatarGroup,
+  StyledCloseCircleTwoTone,
   StyledUserOutlined,
 } from "@/modules/auth/pages/profile/style"
 
@@ -17,6 +18,7 @@ export const ProfileAvatar = () => {
           <StyledUserOutlined />
         )}
       </Upload>
+      <StyledCloseCircleTwoTone />
     </StyledAvatarGroup>
   )
 }

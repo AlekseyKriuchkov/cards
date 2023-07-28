@@ -1,5 +1,8 @@
 import React from "react"
-import { StyledUserName } from "@/modules/auth/pages/profile/style"
+import {
+  StyledProfileWidgetAvatar,
+  StyledUserName,
+} from "@/modules/auth/pages/profile/style"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { WidgetButton } from "@/modules/auth/components/widget-button"
 import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button"
@@ -13,6 +16,7 @@ export const ProfileWidget = () => {
   return (
     <>
       <StyledUserName>{user?.name}</StyledUserName>
+      <StyledProfileWidgetAvatar src={user?.avatar} />
       <ProfileLogOutButton />
     </>
   )
