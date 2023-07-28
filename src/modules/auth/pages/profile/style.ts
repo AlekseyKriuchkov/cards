@@ -15,6 +15,10 @@ export const StyledProfileContainer = styled.div`
   align-items: center;
   width: 100%;
 `
+export const StyledAuthWidgetButton = styled(Button)`
+  width: 100px;
+  height: 35px;
+`
 
 export const StyledProfileText = styled(Text)`
   margin-top: 0.9rem;

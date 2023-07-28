@@ -5,6 +5,7 @@ export const StyledHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 60px;
   z-index: 1;
   background: #fcfcfc;
   box-shadow: 0 2px 10px rgba(109, 109, 109, 0.3);

@@ -1,4 +1,4 @@
-import { RouterProvider } from "react-router-dom"
+import { BrowserRouter, RouterProvider } from "react-router-dom"
 import { route } from "@/routes"
 import { Header } from "@/modules/header"
 import { GlobalStyle } from "@/global-style"
@@ -9,7 +9,9 @@ export const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <BrowserRouter>
+        <Header />
+      </BrowserRouter>
       <ContentWrapper>
         <RouterProvider router={router} />
       </ContentWrapper>

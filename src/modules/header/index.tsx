@@ -4,13 +4,17 @@ import {
   StyledProfileWidgetWrapper,
 } from "@/modules/header/styles"
 import logo from "@/incubator-logo.png"
+import React from "react"
+import { ProfileWidget } from "@/modules/auth/components/profile-widget"
 
 export const Header = () => {
   return (
     <>
       <StyledHeader>
         <StyledLogo src={logo} />
-        <StyledProfileWidgetWrapper></StyledProfileWidgetWrapper>
+        <StyledProfileWidgetWrapper>
+          <ProfileWidget />
+        </StyledProfileWidgetWrapper>
       </StyledHeader>
     </>
   )
