@@ -42,7 +42,6 @@ const authMeUpdate = createAppAsyncThunk(
   "authMe/login",
   async (arg: AuthMeUpdate) => {
     return authApi.authMeUpdate(arg).then((res) => {
-      console.log(res)
       return { user: res.data }
     })
   },
@@ -107,4 +106,5 @@ export const authThunk = {
   authMe,
   forgot,
   newPassword,
+  authMeUpdate,
 }

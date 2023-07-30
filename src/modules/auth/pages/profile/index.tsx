@@ -3,12 +3,12 @@ import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import {
   StyledProfileContainer,
   StyledProfileText,
-  StyledUserName,
 } from "@/modules/auth/pages/profile/style"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button"
 import { ProfileAvatar } from "@/modules/auth/components/profile-avatar"
+import { ProfileUserName } from "@/modules/auth/components/profile-user-name"
 
 export const Profile = () => {
   const { isAuthorized } = useAuth()
@@ -23,7 +23,7 @@ export const Profile = () => {
     <StyledCard title={"Personal information"}>
       <StyledProfileContainer>
         <ProfileAvatar />
-        <StyledUserName>{user?.name}</StyledUserName>
+        <ProfileUserName />
         <StyledProfileText>{user?.email}</StyledProfileText>
         <ProfileLogOutButton />
       </StyledProfileContainer>
