@@ -35,10 +35,29 @@ export type RegisterResponse = {
     _id: string
   }
 }
-export type MeResponse = Omit<User, "__v"> & AuthMeUpdate
+export type MeResponse = User & AuthMeUpdate
 export type AuthMeUpdate = {
   name?: string
   avatar?: string // url or base64
+}
+export type AuthMeUpdateResponse = {
+  updatedUser: {
+    _id: string
+    email: string
+    rememberMe: boolean
+    isAdmin: boolean
+    name: string
+    verified: boolean
+    publicCardPacksCount: number
+    created: string
+    updated: string
+    __v: number
+    token: string
+    tokenDeathTime: number
+    avatar: string
+  }
+  token: string
+  tokenDeathTime: number
 }
 export type LoginType = {
   email: string

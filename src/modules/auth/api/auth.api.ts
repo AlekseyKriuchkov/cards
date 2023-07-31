@@ -1,6 +1,7 @@
 import { authInstance } from "@/modules/auth/api/auth.instance"
 import {
   AuthMeUpdate,
+  AuthMeUpdateResponse,
   ForgotPasswordType,
   LoginType,
   MeResponse,
@@ -24,7 +25,7 @@ export const authApi = {
     return authInstance.post<MeResponse>("me")
   },
   authMeUpdate: (params: AuthMeUpdate) => {
-    return authInstance.put<User>("me", params)
+    return authInstance.put<AuthMeUpdateResponse>("me", params)
   },
   forgot: (params: ForgotPasswordType) => {
     return authInstance.post("forgot", params)

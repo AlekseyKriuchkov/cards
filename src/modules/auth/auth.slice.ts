@@ -33,16 +33,17 @@ const logOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
     console.log(res)
   })
 })
-const authMe = createAppAsyncThunk("authMe/login", async () => {
-  authApi.authMe().then((res) => {
+const authMe = createAppAsyncThunk("authMe/me", async () => {
+  return authApi.authMe().then((res) => {
     console.log(res)
+    return { user: res.data }
   })
 })
 const authMeUpdate = createAppAsyncThunk(
   "authMe/login",
   async (arg: AuthMeUpdate) => {
     return authApi.authMeUpdate(arg).then((res) => {
-      return { user: res.data }
+      return { user: res.data.updatedUser }
     })
   },
 )
@@ -78,6 +79,9 @@ const slice = createSlice({
       if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
     })
     builder.addCase(login.fulfilled, (state, action) => {
+      if (action.payload?.user) state.user = action.payload.user
+    })
+    builder.addCase(authMe.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
     })
     builder.addCase(authMeUpdate.fulfilled, (state, action) => {

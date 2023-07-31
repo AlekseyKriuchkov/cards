@@ -18,6 +18,8 @@ export const ProfileUserName = () => {
     setEdit(false)
   }
 
+  // dispatch auth/me in app
+
   if (edit) {
     return (
       <Form onFinish={onFinish}>
