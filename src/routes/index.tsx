@@ -9,13 +9,14 @@ import {
   SignUp,
 } from "@/modules/auth/pages"
 import { ErrorPage } from "@/modules/auth/pages/error404"
+import { Cards } from "@/modules/cards"
 
 export const route = () => {
   return createBrowserRouter([
-    // {
-    //   path: "/",
-    //   element: <SignIn />,
-    // },
+    {
+      path: "/cards",
+      element: <Cards />,
+    },
     {
       path: "/check-email",
       element: <CheckEmail />,
