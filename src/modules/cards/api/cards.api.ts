@@ -1,7 +1,7 @@
 import { cardsInstance } from "@/modules/cards/api/cards.instance"
 import {
+  CardPacksResponseType,
   DeleteCardsPackType,
-  GetCardsPackResponseType,
   GetCardsPackType,
   NewCardsPackType,
   UpdateCardsPackType,
@@ -9,7 +9,7 @@ import {
 
 export const cardsApi = {
   getCardsPack: (params: GetCardsPackType) => {
-    return cardsInstance.get<GetCardsPackResponseType>("", { params })
+    return cardsInstance.get<CardPacksResponseType>("", { params })
   },
   newCardsPack: (params: NewCardsPackType) => {
     return cardsInstance.post("", params)
