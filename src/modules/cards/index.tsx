@@ -6,7 +6,7 @@ import { useEffect } from "react"
 export const Cards = () => {
   const dispatch = useAppDispatch()
   useEffect(() => {
-    dispatch(cardsThunk.setCards({}))
+    dispatch(cardsThunk.setCards({ page: 5, pageCount: 10 }))
   }, [])
 
   const columns = [
@@ -66,6 +66,15 @@ export const Cards = () => {
       size={"small"}
       columns={columns}
       dataSource={tableData?.cardPacks}
+      scroll={{ y: 300 }}
+      onChange={(pagination) => {
+        dispatch(
+          cardsThunk.setCards({
+            page: pagination.current,
+            pageCount: pagination.pageSize,
+          }),
+        )
+      }}
       pagination={{
         pageSizeOptions: ["10", "20", "50"],
         showQuickJumper: true,

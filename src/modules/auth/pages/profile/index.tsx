@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button"
 import { ProfileAvatar } from "@/modules/auth/components/profile-avatar"
 import { ProfileUserName } from "@/modules/auth/components/profile-user-name"
+import { BackToCardsButton } from "@/modules/auth/components/back-to-cards-button"
 
 export const Profile = () => {
   const { isAuthorized } = useAuth()
@@ -20,13 +21,16 @@ export const Profile = () => {
   }, [isAuthorized])
   console.log(user)
   return (
-    <StyledCard title={"Personal information"}>
-      <StyledProfileContainer>
-        <ProfileAvatar />
-        <ProfileUserName />
-        <StyledProfileText>{user?.email}</StyledProfileText>
-        <ProfileLogOutButton />
-      </StyledProfileContainer>
-    </StyledCard>
+    <>
+      <BackToCardsButton />
+      <StyledCard title={"Personal information"}>
+        <StyledProfileContainer>
+          <ProfileAvatar />
+          <ProfileUserName />
+          <StyledProfileText>{user?.email}</StyledProfileText>
+          <ProfileLogOutButton />
+        </StyledProfileContainer>
+      </StyledCard>
+    </>
   )
 }
