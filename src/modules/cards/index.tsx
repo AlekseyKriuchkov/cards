@@ -21,7 +21,6 @@ export const Cards = () => {
   const { isAuthorized } = useAuth()
   const navigate = useNavigate()
 
-  console.log(params)
   useEffect(() => {
     if (!isAuthorized) navigate("/sign-in")
   }, [isAuthorized])

@@ -6,6 +6,7 @@ import React from "react"
 import { useAppDispatch } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
 import { ParamsPropsType } from "@/modules/cards"
+import { CardsClearFiltersButton } from "@/modules/cards/components/cards-clear-filters-button/cards-clear-filters-button"
 
 export const CardsTableToolbar: React.FC<ParamsPropsType> = ({
   params,
@@ -27,6 +28,7 @@ export const CardsTableToolbar: React.FC<ParamsPropsType> = ({
       />
       <CardsToggleButtons />
       <CardsToolbarSlider params={params} setParams={setParams} />
+      <CardsClearFiltersButton />
     </StyledTableToolbarWrapper>
   )
 }
