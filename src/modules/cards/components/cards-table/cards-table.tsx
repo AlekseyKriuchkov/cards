@@ -1,8 +1,13 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
 import { Button, Space, Table } from "antd"
+import React from "react"
+import { ParamsPropsType } from "@/modules/cards"
 
-export const CardsTable = () => {
+export const CardsTable: React.FC<ParamsPropsType> = ({
+  params,
+  setParams,
+}) => {
   const dispatch = useAppDispatch()
 
   const columns = [
@@ -56,27 +61,34 @@ export const CardsTable = () => {
   ]
 
   const tableData = useAppSelector((state) => state.cards.cards)
-  console.log(tableData)
+  const onChange = (pagination: any) => {
+    console.log(pagination)
+    dispatch(
+      cardsThunk.setCards({
+        ...params,
+        page: pagination.current,
+        pageCount: pagination.pageSize,
+      }),
+    )
+    setParams({
+      ...params,
+      page: pagination.current,
+      pageCount: pagination.pageSize,
+    })
+  }
   return (
     <Table
       size={"small"}
       columns={columns}
       dataSource={tableData?.cardPacks}
-      scroll={{ y: 300 }}
-      onChange={(pagination) => {
-        dispatch(
-          cardsThunk.setCards({
-            page: pagination.current,
-            pageCount: pagination.pageSize,
-          }),
-        )
-      }}
+      scroll={{ y: 350 }}
       pagination={{
         pageSizeOptions: ["10", "20", "50"],
         showQuickJumper: true,
         showSizeChanger: true,
         total: tableData?.cardPacksTotalCount,
       }}
+      onChange={onChange}
     />
   )
 }

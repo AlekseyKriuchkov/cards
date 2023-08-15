@@ -15,7 +15,10 @@ const setCards = createAppAsyncThunk("cards/get", (arg: GetCardsPackType) => {
 
 const slice = createSlice({
   name: "cards",
-  initialState: { cards: null as null | CardPacksResponseType },
+  initialState: {
+    cards: null as null | CardPacksResponseType,
+    params: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setCards.fulfilled, (state, action) => {
