@@ -10,6 +10,13 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
 }) => {
   const dispatch = useAppDispatch()
 
+  const tableData = useAppSelector((state) => state.cards.cards)
+  const date = tableData?.cardPacks
+    .map((el) => el.updated)
+    .map((el) => new Date(el))
+
+  console.log(date)
+
   const columns = [
     {
       key: "No cover",
@@ -60,7 +67,6 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
     },
   ]
 
-  const tableData = useAppSelector((state) => state.cards.cards)
   const onChange = (pagination: any) => {
     console.log(pagination)
     dispatch(

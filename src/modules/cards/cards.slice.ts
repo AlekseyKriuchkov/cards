@@ -17,7 +17,6 @@ const slice = createSlice({
   name: "cards",
   initialState: {
     cards: null as null | CardPacksResponseType,
-    params: null,
   },
   reducers: {},
   extraReducers: (builder) => {

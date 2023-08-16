@@ -22,4 +22,4 @@ export const isLoading = (state: RootState) => state.app.isLoading
 
 export const appReducer = slice.reducer
 
-export const appActions = slice.actions
+export const { setIsLoading } = slice.actions
