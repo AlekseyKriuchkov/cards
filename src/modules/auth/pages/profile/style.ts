@@ -2,7 +2,6 @@ import { Button, Skeleton, Typography } from "antd"
 import { CloseCircleTwoTone, UserOutlined } from "@ant-design/icons"
 import { Avatar } from "antd"
 import styled from "styled-components"
-import { NavLink } from "react-router-dom"
 
 export const { Text } = Typography
 
@@ -36,7 +35,7 @@ export const StyledProfileLogOutButton = styled(Button)`
   margin-bottom: 1.7rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `
-export const StyledUserName = styled(NavLink)<UserNameProps>`
+export const StyledUserName = styled.span<UserNameProps>`
   font-size: ${(props) => (props.fontSize === "big" ? 16 : 12)}px;
   border-bottom: ${(props) =>
     props.border === "none" ? "none" : "1px dashed #1677ff"};

@@ -6,16 +6,20 @@ import {
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { WidgetButton } from "@/modules/auth/components/widget-button"
 import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button"
+import { useNavigate } from "react-router-dom"
 
 export const ProfileWidget = () => {
-  const { isAuthorized } = useAuth()
-  const { user } = useAuth()
+  const { user, isAuthorized } = useAuth()
+  const navigate = useNavigate()
+  const goToProfile = () => {
+    navigate("/profile")
+  }
   if (!isAuthorized) {
     return <WidgetButton />
   }
   return (
     <>
-      <StyledUserName to={"/profile"}>{user?.name}</StyledUserName>
+      <StyledUserName onClick={goToProfile}>{user?.name}</StyledUserName>
       <StyledProfileWidgetAvatar src={user?.avatar} />
       <ProfileLogOutButton />
     </>
