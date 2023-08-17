@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Slider } from "antd"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
@@ -11,8 +11,11 @@ export const CardsToolbarSlider: React.FC<ParamsPropsType> = ({
   const data = useAppSelector((state) => state.cards.cards)
   const dispatch = useAppDispatch()
 
-  const minCount = data?.minCardsCount ? data.minCardsCount : 0
-  const maxCount = data?.maxCardsCount ? data.maxCardsCount : 100
+  useEffect(() => {
+    setParams({ ...params, min: data?.minCardsCount, max: data?.maxCardsCount })
+  }, [data?.minCardsCount, data?.maxCardsCount])
+  const minCount = params.min ? params.min : 0
+  const maxCount = params.max ? params.max : 100
 
   const onAfterChange = (value: [number, number]) => {
     dispatch(
@@ -29,8 +32,8 @@ export const CardsToolbarSlider: React.FC<ParamsPropsType> = ({
       <Slider
         range={{ draggableTrack: true }}
         defaultValue={[minCount, maxCount]}
-        min={minCount}
-        max={maxCount}
+        min={data?.minCardsCount}
+        max={data?.maxCardsCount}
         onAfterChange={onAfterChange}
       />
     </div>

@@ -8,20 +8,27 @@ import {
 
 const setCards = createAppAsyncThunk("cards/get", (arg: GetCardsPackType) => {
   return cardsApi.getCardsPack(arg).then((res) => {
-    console.log(res.data.cardPacks)
     return { cards: res.data }
   })
 })
-
 const slice = createSlice({
   name: "cards",
   initialState: {
     cards: null as null | CardPacksResponseType,
+    isLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setCards.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
+      {
+        state.cards = action.payload.cards
+      }
+      {
+        state.isLoading = false
+      }
+    })
+    builder.addCase(setCards.pending, (state, action) => {
+      state.isLoading = true
     })
   },
 })

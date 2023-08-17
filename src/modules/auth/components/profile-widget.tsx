@@ -15,7 +15,7 @@ export const ProfileWidget = () => {
   }
   return (
     <>
-      <StyledUserName>{user?.name}</StyledUserName>
+      <StyledUserName to={"/profile"}>{user?.name}</StyledUserName>
       <StyledProfileWidgetAvatar src={user?.avatar} />
       <ProfileLogOutButton />
     </>

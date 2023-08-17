@@ -35,7 +35,6 @@ const logOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
 })
 const authMe = createAppAsyncThunk("authMe/me", async () => {
   return authApi.authMe().then((res) => {
-    console.log(res)
     return { user: res.data }
   })
 })

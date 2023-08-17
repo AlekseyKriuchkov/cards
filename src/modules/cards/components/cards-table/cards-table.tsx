@@ -15,8 +15,6 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
     .map((el) => el.updated)
     .map((el) => new Date(el))
 
-  console.log(date)
-
   const columns = [
     {
       key: "No cover",
@@ -68,7 +66,6 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
   ]
 
   const onChange = (pagination: any) => {
-    console.log(pagination)
     dispatch(
       cardsThunk.setCards({
         ...params,
@@ -93,6 +90,8 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
         showQuickJumper: true,
         showSizeChanger: true,
         total: tableData?.cardPacksTotalCount,
+        current: params.page,
+        pageSize: params.pageCount,
       }}
       onChange={onChange}
     />
