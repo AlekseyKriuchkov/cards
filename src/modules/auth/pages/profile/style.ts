@@ -1,4 +1,4 @@
-import { Button, Typography } from "antd"
+import { Button, Skeleton, Typography } from "antd"
 import { CloseCircleTwoTone, UserOutlined } from "@ant-design/icons"
 import { Avatar } from "antd"
 import styled from "styled-components"
@@ -83,4 +83,7 @@ export const StyledProfileWidgetAvatar = styled.img.attrs({
   width: 23px;
   height: 23px;
   border-radius: 50%;
+`
+export const StyledSkeletonProfileAvatar = styled(Skeleton.Image)`
+  margin-bottom: 20px;
 `

@@ -3,11 +3,13 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { LoginType } from "@/modules/auth/api/types"
 import { authThunk, setIsSuccess } from "@/modules/auth/auth.slice"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
-import { Button, Form, Input } from "antd"
+import { Button, Form, Input, Spin } from "antd"
 import { StyledNavLink } from "@/modules/auth/styles"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "@/modules/auth/hooks/useAuth"
 
 export const SignUp = () => {
+  const { isLoading } = useAuth()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const isSuccess = useAppSelector((state) => state.auth.isSuccess)
@@ -21,6 +23,11 @@ export const SignUp = () => {
   const onFinish = async (values: LoginType) => {
     dispatch(authThunk.register(values))
   }
+
+  if (isLoading) {
+    return <Spin />
+  }
+
   return (
     <StyledCard title={"Sign Up"}>
       <Form name="basic" onFinish={onFinish} autoComplete="off">

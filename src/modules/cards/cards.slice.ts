@@ -20,14 +20,10 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setCards.fulfilled, (state, action) => {
-      {
-        state.cards = action.payload.cards
-      }
-      {
-        state.isLoading = false
-      }
+      state.cards = action.payload.cards
+      state.isLoading = false
     })
-    builder.addCase(setCards.pending, (state, action) => {
+    builder.addCase(setCards.pending, (state) => {
       state.isLoading = true
     })
   },

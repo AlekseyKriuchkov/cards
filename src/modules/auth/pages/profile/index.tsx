@@ -13,13 +13,13 @@ import { BackToCardsButton } from "@/modules/auth/components/back-to-cards-butto
 
 export const Profile = () => {
   const { isAuthorized } = useAuth()
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
     if (!isAuthorized) navigate("/sign-in")
   }, [isAuthorized])
-  console.log(user)
+
   return (
     <>
       <BackToCardsButton />
@@ -27,7 +27,9 @@ export const Profile = () => {
         <StyledProfileContainer>
           <ProfileAvatar />
           <ProfileUserName />
-          <StyledProfileText>{user?.email}</StyledProfileText>
+          <StyledProfileText disabled={isLoading}>
+            {user?.email}
+          </StyledProfileText>
           <ProfileLogOutButton />
         </StyledProfileContainer>
       </StyledCard>

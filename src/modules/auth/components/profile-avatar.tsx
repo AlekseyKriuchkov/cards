@@ -4,11 +4,15 @@ import { useAuth } from "@/modules/auth/hooks/useAuth"
 import {
   StyledAvatarGroup,
   StyledCloseCircleTwoTone,
+  StyledSkeletonProfileAvatar,
   StyledUserOutlined,
 } from "@/modules/auth/pages/profile/style"
 
 export const ProfileAvatar = () => {
-  const { user } = useAuth()
+  const { user, isLoading } = useAuth()
+  if (isLoading) {
+    return <StyledSkeletonProfileAvatar />
+  }
   return (
     <StyledAvatarGroup>
       <Upload>

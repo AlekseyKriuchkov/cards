@@ -67,6 +67,7 @@ const slice = createSlice({
   initialState: {
     user: null as User | null,
     isSuccess: false as boolean,
+    isLoading: false,
   },
   reducers: {
     setIsSuccess: (state, action: PayloadAction<boolean>) => {
@@ -76,24 +77,52 @@ const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(register.fulfilled, (state, action) => {
       if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+      state.isLoading = false
+    })
+    builder.addCase(register.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(login.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
+      state.isLoading = false
+    })
+    builder.addCase(login.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(authMe.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
+      state.isLoading = false
+    })
+    builder.addCase(authMe.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(authMeUpdate.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
+      state.isLoading = false
+    })
+    builder.addCase(authMeUpdate.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(logOut.fulfilled, (state) => {
       state.user = null
+      state.isLoading = false
+    })
+    builder.addCase(logOut.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(forgot.fulfilled, (state, action) => {
       if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+      state.isLoading = false
+    })
+    builder.addCase(forgot.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(newPassword.fulfilled, (state, action) => {
       if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+      state.isLoading = false
+    })
+    builder.addCase(newPassword.pending, (state) => {
+      state.isLoading = true
     })
   },
 })

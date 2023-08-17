@@ -1,13 +1,13 @@
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { useAppDispatch } from "@/app/hooks"
 import { authThunk } from "@/modules/auth/auth.slice"
 import {
   StyledCard,
   StyledForgotPasswordLink,
 } from "@/modules/auth/pages/sign-in/styles"
-import { Form, Input, Button, Checkbox } from "antd"
+import { Form, Input, Button, Checkbox, Spin } from "antd"
 import { LoginType } from "@/modules/auth/api/types"
 import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
+import React, { useEffect } from "react"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { StyledNavLink } from "@/modules/auth/styles"
 
@@ -15,7 +15,7 @@ export const SignIn = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const { isAuthorized } = useAuth()
+  const { isAuthorized, isLoading } = useAuth()
 
   useEffect(() => {
     if (isAuthorized) {
@@ -23,13 +23,14 @@ export const SignIn = () => {
     }
   }, [isAuthorized])
 
-  const isSuccess = useAppSelector((state) => state.auth.isSuccess)
-
-  console.log(isSuccess)
-
   const onFinish = async (values: LoginType) => {
     dispatch(authThunk.login(values))
   }
+
+  if (isLoading) {
+    return <Spin />
+  }
+
   return (
     <StyledCard title={"Sign In"}>
       <Form name="basic" onFinish={onFinish} autoComplete="off">
