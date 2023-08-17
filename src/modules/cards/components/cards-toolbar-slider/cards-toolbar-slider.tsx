@@ -9,6 +9,7 @@ export const CardsToolbarSlider: React.FC<ParamsPropsType> = ({
   setParams,
 }) => {
   const data = useAppSelector((state) => state.cards.cards)
+  const isLoading = useAppSelector((state) => state.cards.isLoading)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export const CardsToolbarSlider: React.FC<ParamsPropsType> = ({
   return (
     <div style={{ width: 150 }}>
       <Slider
+        disabled={isLoading}
         range={{ draggableTrack: true }}
         defaultValue={[minCount, maxCount]}
         min={data?.minCardsCount}

@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
-import { Button, Space, Table } from "antd"
+import { Button, Skeleton, Space, Table } from "antd"
 import React from "react"
 import { ParamsPropsType } from "@/modules/cards"
 
@@ -11,6 +11,7 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
   const dispatch = useAppDispatch()
 
   const tableData = useAppSelector((state) => state.cards.cards)
+  const isLoading = useAppSelector((state) => state.cards.isLoading)
   const date = tableData?.cardPacks
     .map((el) => el.updated)
     .map((el) => new Date(el))
@@ -78,6 +79,9 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
       page: pagination.current,
       pageCount: pagination.pageSize,
     })
+  }
+  if (isLoading) {
+    return <Skeleton active paragraph={{ rows: 10 }} />
   }
   return (
     <Table

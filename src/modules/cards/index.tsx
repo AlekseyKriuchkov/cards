@@ -19,8 +19,6 @@ export const Cards = () => {
 
   const data = useAppSelector((state) => state.cards.cards)
 
-  const isLoading = useAppSelector((state) => state.cards.isLoading)
-
   const { isAuthorized } = useAuth()
 
   const navigate = useNavigate()
@@ -45,10 +43,6 @@ export const Cards = () => {
       }),
     )
   }, [])
-
-  if (isLoading) {
-    return <Spin />
-  }
 
   return (
     <>

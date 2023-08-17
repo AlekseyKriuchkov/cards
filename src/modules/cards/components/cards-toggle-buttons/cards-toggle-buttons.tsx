@@ -9,6 +9,7 @@ export const CardsToggleButtons = () => {
   const { user } = useAuth()
   const [toggleAll, setToggleAll] = useState(true)
   const data = useAppSelector((state) => state.cards)
+  const isLoading = useAppSelector((state) => state.cards.isLoading)
   const setAll = () => {
     setToggleAll(true)
     dispatch(
@@ -30,10 +31,18 @@ export const CardsToggleButtons = () => {
   }
   return (
     <Space.Compact>
-      <Button type={toggleAll ? "default" : "primary"} onClick={setMy}>
+      <Button
+        disabled={isLoading}
+        type={toggleAll ? "default" : "primary"}
+        onClick={setMy}
+      >
         My
       </Button>
-      <Button type={toggleAll ? "primary" : "default"} onClick={setAll}>
+      <Button
+        disabled={isLoading}
+        type={toggleAll ? "primary" : "default"}
+        onClick={setAll}
+      >
         All
       </Button>
     </Space.Compact>
