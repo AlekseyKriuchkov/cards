@@ -4,9 +4,9 @@ import { LoginType } from "@/modules/auth/api/types"
 import { authThunk, setIsSuccess } from "@/modules/auth/auth.slice"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form, Input, Spin } from "antd"
-import { StyledNavLink } from "@/modules/auth/styles"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
+import { StyledNavLink } from "@/modules/auth/pages/styles"
 
 export const SignUp = () => {
   const { isLoading } = useAuth()

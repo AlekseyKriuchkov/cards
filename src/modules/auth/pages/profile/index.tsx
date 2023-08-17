@@ -6,10 +6,10 @@ import {
 } from "@/modules/auth/pages/profile/style"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { useNavigate } from "react-router-dom"
-import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button"
-import { ProfileAvatar } from "@/modules/auth/components/profile-avatar"
-import { ProfileUserName } from "@/modules/auth/components/profile-user-name"
-import { BackToCardsButton } from "@/modules/auth/components/back-to-cards-button"
+import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button/profile-logOut-button"
+import { ProfileAvatar } from "@/modules/auth/components/profile-avatar/profile-avatar"
+import { ProfileUserName } from "@/modules/auth/components/profile-user-name/profile-user-name"
+import { BackToCardsButton } from "@/modules/auth/components/back-to-cards-button/back-to-cards-button"
 
 export const Profile = () => {
   const { isAuthorized } = useAuth()

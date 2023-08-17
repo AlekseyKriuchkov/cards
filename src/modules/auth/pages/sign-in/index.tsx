@@ -9,7 +9,7 @@ import { LoginType } from "@/modules/auth/api/types"
 import { useNavigate } from "react-router-dom"
 import React, { useEffect } from "react"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
-import { StyledNavLink } from "@/modules/auth/styles"
+import { StyledNavLink } from "@/modules/auth/pages/styles"
 
 export const SignIn = () => {
   const dispatch = useAppDispatch()

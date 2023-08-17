@@ -7,7 +7,6 @@ import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 import { CardsTableToolbar } from "@/modules/cards/components/cards-table-toolbar/cards-table-toolbar"
 import { GetCardsPackType } from "@/modules/cards/api/types"
-import { Spin } from "antd"
 
 export type ParamsPropsType = {
   params: GetCardsPackType

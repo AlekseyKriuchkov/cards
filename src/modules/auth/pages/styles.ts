@@ -1,7 +1,16 @@
 import styled from "styled-components"
 import { Typography } from "antd"
+import { NavLink } from "react-router-dom"
 
 const { Text } = Typography
+export const StyledNavLink = styled(NavLink)`
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  line-height: 24px;
+`
 
 export const ContentWrapper = styled.div`
   display: flex;
