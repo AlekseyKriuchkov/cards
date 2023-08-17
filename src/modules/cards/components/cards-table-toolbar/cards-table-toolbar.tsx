@@ -30,7 +30,7 @@ export const CardsTableToolbar: React.FC<ParamsPropsType> = ({
       />
       <CardsToggleButtons />
       <CardsToolbarSlider params={params} setParams={setParams} />
-      <CardsClearFiltersButton />
+      <CardsClearFiltersButton params={params} setParams={setParams} />
     </StyledTableToolbarWrapper>
   )
 }
