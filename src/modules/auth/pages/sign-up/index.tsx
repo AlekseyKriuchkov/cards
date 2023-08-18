@@ -6,7 +6,7 @@ import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form, Input, Spin } from "antd"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
-import { StyledNavLink } from "@/modules/auth/pages/styles"
+import { StyledNavLink } from "@/modules/auth/styles"
 
 export const SignUp = () => {
   const { isLoading } = useAuth()

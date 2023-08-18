@@ -31,6 +31,7 @@ export const Cards = () => {
     user_id: "",
     sortPacks: "",
   })
+
   useEffect(() => {
     if (!isAuthorized) navigate("/sign-in")
   }, [isAuthorized])
@@ -42,6 +43,10 @@ export const Cards = () => {
       }),
     )
   }, [])
+
+  useEffect(() => {
+    setParams({ ...params, min: data?.minCardsCount, max: data?.maxCardsCount })
+  }, [data?.minCardsCount, data?.maxCardsCount])
 
   return (
     <>

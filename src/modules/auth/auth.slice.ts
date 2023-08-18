@@ -96,6 +96,9 @@ const slice = createSlice({
     builder.addCase(authMe.pending, (state) => {
       state.isLoading = true
     })
+    builder.addCase(authMe.rejected, (state) => {
+      state.isLoading = false
+    })
     builder.addCase(authMeUpdate.fulfilled, (state, action) => {
       if (action.payload?.user) state.user = action.payload.user
       state.isLoading = false
