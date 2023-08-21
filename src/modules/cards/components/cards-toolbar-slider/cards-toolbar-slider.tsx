@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Slider } from "antd"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
@@ -14,8 +14,13 @@ export const CardsToolbarSlider: React.FC<ParamsPropsType> = ({
 
   const minCount = params.min ? params.min : 0
   const maxCount = params.max ? params.max : 100
-  console.log(maxCount)
-  console.log(params)
+
+  const [value, setValue] = useState([minCount, maxCount])
+
+  const onChangeValue = (value: [number, number]) => {
+    setValue(value)
+  }
+
   const onAfterChange = (value: [number, number]) => {
     dispatch(
       cardsThunk.setCards({
@@ -27,20 +32,17 @@ export const CardsToolbarSlider: React.FC<ParamsPropsType> = ({
     setParams({ ...params, min: value[0], max: value[1] })
   }
 
-  // if (maxCount === null || maxCount === undefined) {
-  //   return <>Loading</>
-  // }
-
   return (
     <div style={{ width: 150 }}>
       <Slider
         disabled={isLoading}
         range
+        value={[value[0], value[1]]}
         defaultValue={[minCount, maxCount]}
-        value={[minCount, maxCount]}
         min={data?.minCardsCount}
         max={data?.maxCardsCount}
         onAfterChange={onAfterChange}
+        onChange={onChangeValue}
       />
     </div>
   )
