@@ -14,6 +14,10 @@ import { Cards } from "@/modules/cards"
 export const route = () => {
   return createBrowserRouter([
     {
+      path: "/",
+      element: <Profile />,
+    },
+    {
       path: "/cards",
       element: <Cards />,
     },

@@ -14,6 +14,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.2.5",
     "@reduxjs/toolkit": "^1.9.5",
     "antd": "^5.5.2",
     "axios": "^1.4.0",

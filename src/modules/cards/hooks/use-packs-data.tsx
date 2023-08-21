@@ -1,6 +1,6 @@
 import React from "react"
 import { useAppSelector } from "@/app/hooks"
-import { Button } from "antd"
+import { TableActionsButtonsBlock } from "@/modules/cards/components/table-actions-buttons-block/table-actions-buttons-block"
 
 export const UsePacksData = () => {
   const myId = useAppSelector((state) => state.auth.user?._id)
@@ -16,6 +16,7 @@ export const UsePacksData = () => {
       key: "cardsCount",
       title: "Cards",
       dataIndex: "cardsCount",
+      width: "10%",
     },
     {
       key: "user_name",
@@ -31,18 +32,20 @@ export const UsePacksData = () => {
       key: "action",
       title: "Actions",
       dataIndex: "action",
+      width: "10%",
     },
   ]
 
-  const handleEdit = () => {
-    alert("Edit")
+  const setLeadingZero = (num: number) => {
+    return num < 10 ? `0${num}` : num
   }
-  const handleDelete = () => {
-    alert("Delete")
+  const formatDate = (str: string) => {
+    let date = new Date(str)
+    return `${setLeadingZero(date.getUTCDate())}.${setLeadingZero(
+      date.getUTCMonth() + 1,
+    )}.${setLeadingZero(date.getUTCFullYear())}`
   }
-  const handleLearn = () => {
-    alert("Learn")
-  }
+
   const rows = tableData?.map((pack) => {
     const isMyPack = myId === pack.user_id
 
@@ -50,17 +53,11 @@ export const UsePacksData = () => {
       name: pack.name,
       user_name: pack.user_name,
       cardsCount: pack.cardsCount,
-      updated: new Date(pack.updated),
+      updated: formatDate(pack.updated),
       action: isMyPack ? (
-        <div>
-          <Button onClick={handleLearn}>Learn</Button>
-          <Button onClick={handleEdit}>Edit</Button>
-          <Button onClick={handleDelete}>Delete</Button>
-        </div>
+        <TableActionsButtonsBlock isMyPack={isMyPack} />
       ) : (
-        <div>
-          <Button onClick={handleLearn}>Learn</Button>
-        </div>
+        <TableActionsButtonsBlock isMyPack={isMyPack} />
       ),
     }
   })
