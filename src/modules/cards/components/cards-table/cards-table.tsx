@@ -37,7 +37,7 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
       size={"small"}
       columns={columns}
       dataSource={rows}
-      scroll={{ y: 350 }}
+      scroll={{ y: 335 }}
       pagination={{
         pageSizeOptions: ["10", "20", "50"],
         showQuickJumper: true,

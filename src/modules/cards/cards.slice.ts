@@ -4,10 +4,16 @@ import { cardsApi } from "@/modules/cards/api/cards.api"
 import {
   CardPacksResponseType,
   GetCardsPackType,
+  NewCardsPackType,
 } from "@/modules/cards/api/types"
 
 const setCards = createAppAsyncThunk("cards/get", (arg: GetCardsPackType) => {
   return cardsApi.getCardsPack(arg).then((res) => {
+    return { cards: res.data }
+  })
+})
+const newPack = createAppAsyncThunk("cards/post", (arg: NewCardsPackType) => {
+  return cardsApi.newCardsPack(arg).then((res) => {
     return { cards: res.data }
   })
 })
@@ -26,9 +32,13 @@ const slice = createSlice({
     builder.addCase(setCards.pending, (state) => {
       state.isLoading = true
     })
+    builder.addCase(newPack.fulfilled, (state, action) => {
+      state.cards = action.payload.cards
+      state.isLoading = false
+    })
   },
 })
 
 export const cardsReducer = slice.reducer
 
-export const cardsThunk = { setCards }
+export const cardsThunk = { setCards, newPack }
