@@ -14,12 +14,10 @@ export const CardsModal: React.FC<PropsType> = ({
   callback,
   showModal,
   title,
-  children,
 }) => {
   const dispatch = useAppDispatch()
-  const onFinish = (value: string) => {
-    dispatch(cardsThunk.newPack({ cardsPack: { name: value } }))
-    console.log(value)
+  const onFinish = async (values: { value: string }) => {
+    dispatch(cardsThunk.newPack({ cardsPack: { name: values.value } }))
     callback()
   }
 
