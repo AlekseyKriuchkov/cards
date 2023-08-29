@@ -6,7 +6,7 @@ import {
 import { useAppSelector } from "@/app/hooks"
 import React, { useState } from "react"
 import { CardsModal } from "@/modules/cards/components/modal"
-import { Input } from "antd"
+import { AddNewPackModal } from "@/modules/cards/components/add-new-pack-modal/add-new-pack-modal"
 
 export const CardsTableHeader = () => {
   const [showModal, setShowModal] = useState(false)
@@ -25,7 +25,7 @@ export const CardsTableHeader = () => {
           callback={closeModal}
           title={"Add new pack"}
         >
-          <Input placeholder={"Enter pack name"} />
+          <AddNewPackModal callback={closeModal} />
         </CardsModal>
         <StyledTableHeaderWrapper>
           <StyledTableTitle>Packs list</StyledTableTitle>
