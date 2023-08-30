@@ -12,7 +12,21 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
   const dispatch = useAppDispatch()
 
   const tableData = useAppSelector((state) => state.cards.cards)
+
   const isLoading = useAppSelector((state) => state.cards.isLoading)
+
+  const modalType = useAppSelector((state) => state.cards.modalType)
+
+  if (modalType.modalType === "delete") {
+    console.log(`delete + ${modalType.pack_id}`)
+  }
+  if (modalType.modalType === "update") {
+    console.log("update")
+  }
+  if (modalType.modalType === "learn") {
+    console.log("learn")
+  }
+
   const { rows, columns } = UsePacksData()
 
   const onChange = (pagination: any) => {
@@ -37,7 +51,7 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
       size={"small"}
       columns={columns}
       dataSource={rows}
-      scroll={{ y: 335 }}
+      scroll={{ y: 320 }}
       pagination={{
         pageSizeOptions: ["10", "20", "50"],
         showQuickJumper: true,

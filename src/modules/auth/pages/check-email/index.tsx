@@ -3,6 +3,7 @@ import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form } from "antd"
 import { useNavigate } from "react-router-dom"
 import { StyledCheckEmailImage } from "@/modules/auth/pages/check-email/styles"
+// @ts-ignore
 import checkEmailImage from "@/assets/check-email-image.svg"
 import { StyledText } from "@/modules/auth/pages/styles"
 import { useAppDispatch } from "@/app/hooks"

@@ -1,9 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { cardsApi } from "@/modules/cards/api/cards.api"
 import {
   CardPacksResponseType,
   GetCardsPackType,
+  ModalType,
   NewCardsPackType,
 } from "@/modules/cards/api/types"
 
@@ -22,8 +23,13 @@ const slice = createSlice({
   initialState: {
     cards: null as null | CardPacksResponseType,
     isLoading: false,
+    modalType: {} as ModalType,
   },
-  reducers: {},
+  reducers: {
+    setModalType: (state, action: PayloadAction<ModalType>) => {
+      state.modalType = action.payload
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(setCards.fulfilled, (state, action) => {
       state.cards = action.payload.cards
@@ -38,6 +44,8 @@ const slice = createSlice({
     })
   },
 })
+
+export const { setModalType } = slice.actions
 
 export const cardsReducer = slice.reducer
 

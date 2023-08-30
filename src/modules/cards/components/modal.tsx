@@ -18,7 +18,13 @@ export const CardsModal: React.FC<PropsType> = ({
     callback()
   }
   return (
-    <Modal footer={null} title={title} open={showModal} onCancel={handleCancel}>
+    <Modal
+      centered
+      footer={null}
+      title={title}
+      open={showModal}
+      onCancel={handleCancel}
+    >
       {children}
     </Modal>
   )

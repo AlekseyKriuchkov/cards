@@ -8,12 +8,24 @@ import {
   StyledSpan,
   StyledWrapper,
 } from "@/modules/cards/components/table-actions-buttons-block/styles"
+import { useAppDispatch } from "@/app/hooks"
+import { setModalType } from "@/modules/cards/cards.slice"
 
 type PropsType = {
   isMyPack: boolean
+  pack_id: string
 }
 
-export const TableActionsButtonsBlock: React.FC<PropsType> = ({ isMyPack }) => {
+export const TableActionsButtonsBlock: React.FC<PropsType> = ({
+  isMyPack,
+  pack_id,
+}) => {
+  const dispatch = useAppDispatch()
+
+  const func = () => {
+    dispatch(setModalType({ modalType: "delete", pack_id: pack_id }))
+  }
+
   if (isMyPack)
     return (
       <StyledWrapper>
@@ -23,7 +35,7 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({ isMyPack }) => {
         <StyledSpan onClick={() => {}}>
           <EditOutlined />
         </StyledSpan>
-        <StyledSpan onClick={() => {}}>
+        <StyledSpan onClick={func}>
           <DeleteOutlined />
         </StyledSpan>
       </StyledWrapper>
