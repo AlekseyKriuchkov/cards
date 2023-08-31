@@ -17,16 +17,6 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
 
   const modalType = useAppSelector((state) => state.cards.modalType)
 
-  if (modalType.modalType === "delete") {
-    console.log(`delete + ${modalType.pack_id}`)
-  }
-  if (modalType.modalType === "update") {
-    console.log("update")
-  }
-  if (modalType.modalType === "learn") {
-    console.log("learn")
-  }
-
   const { rows, columns } = UsePacksData()
 
   const onChange = (pagination: any) => {
@@ -45,6 +35,15 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
   }
   if (isLoading) {
     return <Skeleton active paragraph={{ rows: 10 }} />
+  }
+  if (modalType.modalType === "delete") {
+    console.log(`delete + ${modalType.pack_id} + ${modalType.pack_name}`)
+  }
+  if (modalType.modalType === "update") {
+    console.log("update")
+  }
+  if (modalType.modalType === "learn") {
+    console.log("learn")
   }
   return (
     <Table

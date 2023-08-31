@@ -55,7 +55,11 @@ export const UsePacksData = () => {
       cardsCount: pack.cardsCount,
       updated: formatDate(pack.updated),
       action: (
-        <TableActionsButtonsBlock pack_id={pack._id} isMyPack={isMyPack} />
+        <TableActionsButtonsBlock
+          pack_id={pack._id}
+          pack_name={pack.name}
+          isMyPack={isMyPack}
+        />
       ),
     }
   })

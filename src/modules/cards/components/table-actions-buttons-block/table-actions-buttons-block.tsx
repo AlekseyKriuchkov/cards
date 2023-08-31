@@ -14,35 +14,61 @@ import { setModalType } from "@/modules/cards/cards.slice"
 type PropsType = {
   isMyPack: boolean
   pack_id: string
+  pack_name: string
 }
 
 export const TableActionsButtonsBlock: React.FC<PropsType> = ({
   isMyPack,
   pack_id,
+  pack_name,
 }) => {
   const dispatch = useAppDispatch()
 
-  const func = () => {
-    dispatch(setModalType({ modalType: "delete", pack_id: pack_id }))
+  const deleteHandler = () => {
+    dispatch(
+      setModalType({
+        modalType: "delete",
+        pack_id: pack_id,
+        pack_name: pack_name,
+      }),
+    )
+  }
+  const editHandler = () => {
+    dispatch(
+      setModalType({
+        modalType: "update",
+        pack_id: pack_id,
+        pack_name: pack_name,
+      }),
+    )
+  }
+  const learnHandler = () => {
+    dispatch(
+      setModalType({
+        modalType: "learn",
+        pack_id: pack_id,
+        pack_name: pack_name,
+      }),
+    )
   }
 
   if (isMyPack)
     return (
       <StyledWrapper>
-        <StyledSpan onClick={() => {}}>
+        <StyledSpan onClick={learnHandler}>
           <PlaySquareOutlined />
         </StyledSpan>
-        <StyledSpan onClick={() => {}}>
+        <StyledSpan onClick={editHandler}>
           <EditOutlined />
         </StyledSpan>
-        <StyledSpan onClick={func}>
+        <StyledSpan onClick={deleteHandler}>
           <DeleteOutlined />
         </StyledSpan>
       </StyledWrapper>
     )
   return (
     <StyledWrapper>
-      <StyledSpan onClick={() => {}}>
+      <StyledSpan onClick={learnHandler}>
         <PlaySquareOutlined />
       </StyledSpan>
     </StyledWrapper>

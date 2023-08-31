@@ -35,11 +35,11 @@ export const SignIn = () => {
     <StyledCard title={"Sign In"}>
       <Form name="basic" onFinish={onFinish} autoComplete="off">
         <Form.Item name="email">
-          <Input placeholder={"Email"} />
+          <Input placeholder={"Email"} autoComplete={"email"} />
         </Form.Item>
 
         <Form.Item name="password">
-          <Input.Password placeholder={"Password"} />
+          <Input.Password placeholder={"Password"} autoComplete={"password"} />
         </Form.Item>
 
         <Form.Item
