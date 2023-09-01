@@ -3,6 +3,7 @@ import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { cardsApi } from "@/modules/cards/api/cards.api"
 import {
   CardPacksResponseType,
+  DeleteCardsPackType,
   GetCardsPackType,
   ModalType,
   NewCardsPackType,
@@ -18,6 +19,14 @@ const newPack = createAppAsyncThunk("cards/post", (arg: NewCardsPackType) => {
     return { cards: res.data }
   })
 })
+const deletePack = createAppAsyncThunk(
+  "cards/delete",
+  (arg: DeleteCardsPackType) => {
+    return cardsApi.deleteCardsPack(arg).then((res) => {
+      return { cards: res.data }
+    })
+  },
+)
 const slice = createSlice({
   name: "cards",
   initialState: {
@@ -42,6 +51,10 @@ const slice = createSlice({
       state.cards = action.payload.cards
       state.isLoading = false
     })
+    builder.addCase(deletePack.fulfilled, (state, action) => {
+      state.cards = action.payload.cards
+      state.isLoading = false
+    })
   },
 })
 
@@ -49,4 +62,4 @@ export const { setModalType } = slice.actions
 
 export const cardsReducer = slice.reducer
 
-export const cardsThunk = { setCards, newPack }
+export const cardsThunk = { setCards, newPack, deletePack }
