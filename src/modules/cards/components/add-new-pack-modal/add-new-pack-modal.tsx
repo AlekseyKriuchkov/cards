@@ -1,17 +1,13 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from "antd"
 import { useAppDispatch } from "@/app/hooks"
-import { cardsThunk } from "@/modules/cards/cards.slice"
+import { cardsThunk, setModalType } from "@/modules/cards/cards.slice"
 import {
   StyledAddNewPackModalButtonsWrapper,
   StyledAddNewPackModalWrapper,
 } from "@/modules/cards/components/add-new-pack-modal/styles"
 
-type PropsType = {
-  callback: () => void
-}
-
-export const AddNewPackModal: React.FC<PropsType> = ({ callback }) => {
+export const AddNewPackModal = () => {
   const dispatch = useAppDispatch()
   const onFinish = async (values: { value: string }) => {
     dispatch(
@@ -19,10 +15,10 @@ export const AddNewPackModal: React.FC<PropsType> = ({ callback }) => {
         cardsPack: { name: values.value, private: !!values.value },
       }),
     )
-    callback()
+    dispatch(setModalType(null))
   }
   const handleCancel = () => {
-    callback()
+    dispatch(setModalType(null))
   }
   return (
     <StyledAddNewPackModalWrapper>

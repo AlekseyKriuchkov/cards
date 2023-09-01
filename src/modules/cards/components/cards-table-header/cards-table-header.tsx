@@ -3,29 +3,29 @@ import {
   StyledTableHeaderWrapper,
   StyledTableTitle,
 } from "@/modules/cards/components/cards-table-header/styles"
-import { useAppSelector } from "@/app/hooks"
-import React, { useState } from "react"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import React from "react"
 import { CardsModal } from "@/modules/cards/components/modal"
 import { AddNewPackModal } from "@/modules/cards/components/add-new-pack-modal/add-new-pack-modal"
+import { setModalType } from "@/modules/cards/cards.slice"
 
 export const CardsTableHeader = () => {
-  const [showModal, setShowModal] = useState(false)
   const isLoading = useAppSelector((state) => state.cards.isLoading)
+  const modalType = useAppSelector((state) => state.cards.modalType)
+  const dispatch = useAppDispatch()
   const addNewPack = () => {
-    setShowModal(true)
+    dispatch(
+      setModalType({
+        modalType: "addPack",
+      }),
+    )
   }
-  const closeModal = () => {
-    setShowModal(false)
-  }
-  if (showModal) {
+
+  if (modalType?.modalType === "addPack") {
     return (
       <div>
-        <CardsModal
-          showModal={showModal}
-          callback={closeModal}
-          title={"Add new pack"}
-        >
-          <AddNewPackModal callback={closeModal} />
+        <CardsModal showModal={true} title={"Add new pack"}>
+          <AddNewPackModal />
         </CardsModal>
         <StyledTableHeaderWrapper>
           <StyledTableTitle>Packs list</StyledTableTitle>
