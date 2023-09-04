@@ -24,7 +24,7 @@ export const CardsTableHeader = () => {
   if (modalType?.modalType === "addPack") {
     return (
       <div>
-        <CardsModal showModal={true} title={"Add new pack"}>
+        <CardsModal title={"Add new pack"}>
           <AddNewPackModal />
         </CardsModal>
         <StyledTableHeaderWrapper>

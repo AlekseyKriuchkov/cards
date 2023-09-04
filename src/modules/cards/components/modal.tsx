@@ -4,16 +4,11 @@ import { useAppDispatch } from "@/app/hooks"
 import { setModalType } from "@/modules/cards/cards.slice"
 
 type PropsType = {
-  showModal: boolean
   title: string
   children: ReactNode
 }
 
-export const CardsModal: React.FC<PropsType> = ({
-  showModal,
-  title,
-  children,
-}) => {
+export const CardsModal: React.FC<PropsType> = ({ title, children }) => {
   const dispatch = useAppDispatch()
   const handleCancel = () => {
     dispatch(setModalType(null))
@@ -23,7 +18,7 @@ export const CardsModal: React.FC<PropsType> = ({
       centered
       footer={null}
       title={title}
-      open={showModal}
+      open={true}
       onCancel={handleCancel}
     >
       {children}

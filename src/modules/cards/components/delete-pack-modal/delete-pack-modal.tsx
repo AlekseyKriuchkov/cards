@@ -2,6 +2,7 @@ import React from "react"
 import { useAppDispatch } from "@/app/hooks"
 import { cardsThunk, setModalType } from "@/modules/cards/cards.slice"
 import { Button } from "antd"
+import { StyledPacksModalButtonsWrapper } from "@/modules/cards/components/styles"
 
 type PropsType = {
   pack_id: string
@@ -21,12 +22,14 @@ export const DeletePackModal: React.FC<PropsType> = ({
     dispatch(setModalType(null))
   }
   return (
-    <div>
+    <>
       <h3>Do you want to delete a pack by name {pack_name} ?</h3>
-      <Button danger onClick={onSubmit}>
-        Delete
-      </Button>
-      <Button onClick={handleCancel}>Cancel</Button>
-    </div>
+      <StyledPacksModalButtonsWrapper>
+        <Button danger onClick={onSubmit}>
+          Delete
+        </Button>
+        <Button onClick={handleCancel}>Cancel</Button>
+      </StyledPacksModalButtonsWrapper>
+    </>
   )
 }

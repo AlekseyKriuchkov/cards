@@ -41,7 +41,7 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
   if (modalType?.modalType === "delete") {
     return (
       <>
-        <CardsModal showModal={true} title={"Delete pack"}>
+        <CardsModal title={"Delete pack"}>
           <DeletePackModal
             pack_name={modalType.pack_name ? modalType.pack_name : ""}
             pack_id={modalType.pack_id ? modalType.pack_id : ""}
