@@ -6,6 +6,7 @@ import { ParamsPropsType } from "@/modules/cards"
 import { UsePacksData } from "@/modules/cards/hooks/use-packs-data"
 import { CardsModal } from "@/modules/cards/components/modal"
 import { DeletePackModal } from "@/modules/cards/components/delete-pack-modal/delete-pack-modal"
+import { EditPackModal } from "@/modules/cards/components/edit-pack-modal/edit-pack-modal"
 
 export const CardsTable: React.FC<ParamsPropsType> = ({
   params,
@@ -65,8 +66,29 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
       </>
     )
   }
-  if (modalType?.modalType === "update") {
-    console.log("update")
+  if (modalType?.modalType === "edit") {
+    return (
+      <>
+        <CardsModal title={"Edit pack"}>
+          <EditPackModal />
+        </CardsModal>
+        <Table
+          size={"small"}
+          columns={columns}
+          dataSource={rows}
+          scroll={{ y: 320 }}
+          pagination={{
+            pageSizeOptions: ["10", "20", "50"],
+            showQuickJumper: true,
+            showSizeChanger: true,
+            total: tableData?.cardPacksTotalCount,
+            current: params.page,
+            pageSize: params.pageCount,
+          }}
+          onChange={onChange}
+        />
+      </>
+    )
   }
   if (modalType?.modalType === "learn") {
     console.log("learn")
