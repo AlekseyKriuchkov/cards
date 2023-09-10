@@ -45,7 +45,8 @@ export type UpdateCardsPackType = {
   }
 }
 export type ModalType = {
-  modalType: "delete" | "update" | "learn" | "addPack"
+  modalType: "delete" | "edit" | "learn" | "addPack"
   pack_id?: string
   pack_name?: string
+  private?: boolean
 } | null
