@@ -58,6 +58,7 @@ export const UsePacksData = () => {
         <TableActionsButtonsBlock
           pack_id={pack._id}
           pack_name={pack.name}
+          private_pack={pack.private}
           isMyPack={isMyPack}
         />
       ),
