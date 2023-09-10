@@ -15,12 +15,14 @@ type PropsType = {
   isMyPack: boolean
   pack_id: string
   pack_name: string
+  private_pack: boolean
 }
 
 export const TableActionsButtonsBlock: React.FC<PropsType> = ({
   isMyPack,
   pack_id,
   pack_name,
+  private_pack,
 }) => {
   const dispatch = useAppDispatch()
 
@@ -36,9 +38,10 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
   const editHandler = () => {
     dispatch(
       setModalType({
-        modalType: "update",
+        modalType: "edit",
         pack_id: pack_id,
         pack_name: pack_name,
+        private: private_pack,
       }),
     )
   }
