@@ -11,22 +11,26 @@ export const UsePacksData = () => {
       key: "name",
       title: "Name",
       dataIndex: "name",
+      sorter: true,
     },
     {
       key: "cardsCount",
       title: "Cards",
       dataIndex: "cardsCount",
       width: "10%",
+      sorter: true,
     },
     {
       key: "user_name",
       title: "Created By",
       dataIndex: "user_name",
+      sorter: true,
     },
     {
       key: "updated",
       title: "Last Updated",
       dataIndex: "updated",
+      sorter: true,
     },
     {
       key: "action",
