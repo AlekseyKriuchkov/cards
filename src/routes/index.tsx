@@ -10,6 +10,7 @@ import {
 } from "@/modules/auth/pages"
 import { ErrorPage } from "@/modules/auth/pages/error404"
 import { Cards } from "@/modules/cards"
+import { Pack } from "@/modules/cards/components/learn-pack/pack"
 
 export const route = () => {
   return createBrowserRouter([
@@ -20,6 +21,10 @@ export const route = () => {
     {
       path: "/cards",
       element: <Cards />,
+    },
+    {
+      path: "cards/pack/:id",
+      element: <Pack />,
     },
     {
       path: "/check-email",

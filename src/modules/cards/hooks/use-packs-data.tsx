@@ -1,6 +1,7 @@
 import React from "react"
 import { useAppSelector } from "@/app/hooks"
 import { TableActionsButtonsBlock } from "@/modules/cards/components/table-actions-buttons-block/table-actions-buttons-block"
+import { NavLink } from "react-router-dom"
 
 export const UsePacksData = () => {
   const myId = useAppSelector((state) => state.auth.user?._id)
@@ -54,7 +55,7 @@ export const UsePacksData = () => {
     const isMyPack = myId === pack.user_id
 
     return {
-      name: pack.name,
+      name: <NavLink to={`pack/${pack._id}`}>{pack.name}</NavLink>,
       user_name: pack.user_name,
       cardsCount: pack.cardsCount,
       updated: formatDate(pack.updated),
@@ -64,6 +65,7 @@ export const UsePacksData = () => {
           pack_name={pack.name}
           private_pack={pack.private}
           isMyPack={isMyPack}
+          cardsCount={pack.cardsCount}
         />
       ),
     }

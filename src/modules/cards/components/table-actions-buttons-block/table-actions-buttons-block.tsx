@@ -16,6 +16,7 @@ type PropsType = {
   pack_id: string
   pack_name: string
   private_pack: boolean
+  cardsCount: number
 }
 
 export const TableActionsButtonsBlock: React.FC<PropsType> = ({
@@ -23,6 +24,7 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
   pack_id,
   pack_name,
   private_pack,
+  cardsCount,
 }) => {
   const dispatch = useAppDispatch()
 
