@@ -1,18 +1,22 @@
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
-import { Skeleton, Table } from "antd"
+import { Table, TablePaginationConfig } from "antd"
 import React from "react"
 import { ParamsPropsType } from "@/modules/cards"
 import { UsePacksData } from "@/modules/cards/hooks/use-packs-data"
 import { CardsModal } from "@/modules/cards/components/modal"
 import { DeletePackModal } from "@/modules/cards/components/delete-pack-modal/delete-pack-modal"
 import { EditPackModal } from "@/modules/cards/components/edit-pack-modal/edit-pack-modal"
+import { FilterValue } from "antd/es/table/interface"
+import { useNavigate } from "react-router-dom"
 
 export const CardsTable: React.FC<ParamsPropsType> = ({
   params,
   setParams,
 }) => {
   const dispatch = useAppDispatch()
+
+  const navigate = useNavigate()
 
   const tableData = useAppSelector((state) => state.cards.cards)
 
@@ -22,22 +26,30 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
 
   const { rows, columns } = UsePacksData()
 
-  const onChange = (pagination: any) => {
+  const onChange = (
+    pagination: TablePaginationConfig,
+    filters: Record<string, FilterValue | null>,
+    sorter: any,
+  ) => {
+    const sortRequest: string =
+      (sorter.order === "ascend" && `1${sorter.field}`) ||
+      (sorter.order === "descend" && `0${sorter.field}`) ||
+      sorter.field
+    console.log(sortRequest)
     dispatch(
       cardsThunk.setCards({
         ...params,
+        sortPacks: sortRequest,
         page: pagination.current,
         pageCount: pagination.pageSize,
       }),
     )
     setParams({
       ...params,
+      sortPacks: sortRequest,
       page: pagination.current,
       pageCount: pagination.pageSize,
     })
-  }
-  if (isLoading) {
-    return <Skeleton active paragraph={{ rows: 10 }} />
   }
   if (modalType?.modalType === "delete") {
     return (
@@ -91,7 +103,7 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
     )
   }
   if (modalType?.modalType === "learn") {
-    console.log("learn")
+    navigate(`pack/${modalType.pack_id}`)
   }
   return (
     <Table
@@ -99,6 +111,7 @@ export const CardsTable: React.FC<ParamsPropsType> = ({
       columns={columns}
       dataSource={rows}
       scroll={{ y: 320 }}
+      loading={isLoading}
       pagination={{
         pageSizeOptions: ["10", "20", "50"],
         showQuickJumper: true,
