@@ -3,8 +3,12 @@ import { Button, Space } from "antd"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { packsThunk } from "@/modules/packs/packs.slice"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
+import { ParamsPropsType } from "@/modules/packs"
 
-export const PacksToggleButtons = () => {
+export const PacksToggleButtons: React.FC<ParamsPropsType> = ({
+  setParams,
+  params,
+}) => {
   const dispatch = useAppDispatch()
   const { user } = useAuth()
   const [toggleAll, setToggleAll] = useState(true)
@@ -12,6 +16,7 @@ export const PacksToggleButtons = () => {
   const isLoading = useAppSelector((state) => state.packs.isLoading)
   const setAll = () => {
     setToggleAll(true)
+    setParams({ ...params, user_id: user?._id })
     dispatch(
       packsThunk.setPacks({
         page: data.cards?.page,
@@ -21,6 +26,7 @@ export const PacksToggleButtons = () => {
   }
   const setMy = () => {
     setToggleAll(false)
+    setParams({ ...params, user_id: user?._id })
     dispatch(
       packsThunk.setPacks({
         page: data.cards?.page,

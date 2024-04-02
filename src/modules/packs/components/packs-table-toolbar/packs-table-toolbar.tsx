@@ -28,7 +28,7 @@ export const PacksTableToolbar: React.FC<ParamsPropsType> = ({
         onSearch={onSearch}
         style={{ width: 200 }}
       />
-      <PacksToggleButtons />
+      <PacksToggleButtons params={params} setParams={setParams} />
       <PacksToolbarSlider params={params} setParams={setParams} />
       <PacksClearFiltersButton params={params} setParams={setParams} />
     </StyledTableToolbarWrapper>
