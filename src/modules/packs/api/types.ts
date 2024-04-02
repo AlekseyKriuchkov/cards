@@ -39,14 +39,16 @@ export type DeleteCardsPackType = {
   id: string
 }
 export type UpdateCardsPackType = {
+  params: GetCardsPackType
   cardsPack: {
     _id: string
     name: string
+    private: boolean
   }
 }
 export type PacksModalType = {
-  modalType: "delete" | "edit" | "learn" | "addPack"
-  pack_id?: string
-  pack_name?: string
+  actionType: "delete" | "edit" | "addPack"
+  packId?: string
+  packName?: string
   private?: boolean
 } | null
