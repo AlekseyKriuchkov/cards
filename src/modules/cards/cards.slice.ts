@@ -1,78 +1,70 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
-import { cardsApi } from "@/modules/cards/api/cards.api"
 import {
-  CardPacksResponseType,
-  DeleteCardsPackType,
-  GetCardsPackType,
-  ModalType,
-  NewCardsPackType,
-  UpdateCardsPackType,
+  CardsModalType,
+  DeleteCardRequestType,
+  GetPackCardsResponseType,
+  GetPackCardsType,
+  NewCardRequestType,
+  UpdateCardRequestType,
 } from "@/modules/cards/api/types"
+import { cardsApi } from "@/modules/cards/api/cards.api"
+import { createSlice } from "@reduxjs/toolkit"
 
-const setCards = createAppAsyncThunk("cards/get", (arg: GetCardsPackType) => {
-  return cardsApi.getCardsPack(arg).then((res) => {
-    return { cards: res.data }
+const setCards = createAppAsyncThunk("cards/get", (arg: GetPackCardsType) => {
+  return cardsApi.getCards(arg).then((res) => {
+    return { card: res.data }
   })
 })
-const newPack = createAppAsyncThunk("cards/post", (arg: NewCardsPackType) => {
-  return cardsApi.newCardsPack(arg).then((res) => {
-    return { cards: res.data }
+const newCard = createAppAsyncThunk("cards/post", (arg: NewCardRequestType) => {
+  return cardsApi.newCard(arg).then((res) => {
+    return { card: res.data }
   })
 })
-const updateCardsPack = createAppAsyncThunk(
-  "cards/put",
-  (arg: UpdateCardsPackType) => {
-    return cardsApi.updateCardsPack(arg).then((res) => {
-      return { cards: res.data }
-    })
-  },
-)
-const deletePack = createAppAsyncThunk(
+const deleteCard = createAppAsyncThunk(
   "cards/delete",
-  (arg: DeleteCardsPackType) => {
-    return cardsApi.deleteCardsPack(arg).then((res) => {
-      return { cards: res.data }
+  (arg: DeleteCardRequestType) => {
+    return cardsApi.deleteCard(arg).then((res) => {
+      return { card: res.data }
     })
   },
 )
+const updateCard = createAppAsyncThunk(
+  "cards/update",
+  (arg: UpdateCardRequestType) => {
+    return cardsApi.updateCard(arg).then((res) => {
+      return { card: res.data }
+    })
+  },
+)
+
 const slice = createSlice({
-  name: "cards",
+  name: "pack",
   initialState: {
-    cards: null as null | CardPacksResponseType,
+    card: null as null | GetPackCardsResponseType,
     isLoading: false,
-    modalType: {} as ModalType,
+    modalType: {} as CardsModalType,
   },
-  reducers: {
-    setModalType: (state, action: PayloadAction<ModalType>) => {
-      state.modalType = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setCards.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
+      state.card = action.payload.card
       state.isLoading = false
     })
-    builder.addCase(setCards.pending, (state) => {
+    builder.addCase(setCards.pending, (state, action) => {
       state.isLoading = true
     })
-    builder.addCase(newPack.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
-      state.isLoading = false
+    builder.addCase(newCard.fulfilled, (state, action) => {
+      state.card = action.payload.card
     })
-    builder.addCase(updateCardsPack.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
-      state.isLoading = false
+    builder.addCase(deleteCard.fulfilled, (state, action) => {
+      state.card = action.payload.card
     })
-    builder.addCase(deletePack.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
-      state.isLoading = false
+    builder.addCase(updateCard.fulfilled, (state, action) => {
+      state.card = action.payload.card
     })
   },
 })
-
-export const { setModalType } = slice.actions
 
 export const cardsReducer = slice.reducer
 
-export const cardsThunk = { setCards, newPack, deletePack, updateCardsPack }
+export const cardsThunk = { setCards, newCard, deleteCard, updateCard }

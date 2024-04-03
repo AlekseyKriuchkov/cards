@@ -3,6 +3,7 @@ import {
   StyledLogo,
   StyledProfileWidgetWrapper,
 } from "@/modules/header/styles"
+// @ts-ignore
 import logo from "@/assets/incubator-logo.png"
 import React from "react"
 import { ProfileWidget } from "@/modules/auth/components/profile-widget/profile-widget"

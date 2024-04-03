@@ -1,23 +1,23 @@
 import { cardsInstance } from "@/modules/cards/api/cards.instance"
 import {
-  CardPacksResponseType,
-  DeleteCardsPackType,
-  GetCardsPackType,
-  NewCardsPackType,
-  UpdateCardsPackType,
+  DeleteCardRequestType,
+  GetPackCardsResponseType,
+  GetPackCardsType,
+  NewCardRequestType,
+  UpdateCardRequestType,
 } from "@/modules/cards/api/types"
 
 export const cardsApi = {
-  getCardsPack: (params: GetCardsPackType) => {
-    return cardsInstance.get<CardPacksResponseType>("", { params })
+  getCards: (params: GetPackCardsType) => {
+    return cardsInstance.get<GetPackCardsResponseType>("", { params })
   },
-  newCardsPack: (params: NewCardsPackType) => {
-    return cardsInstance.post("", params)
+  newCard: (params: NewCardRequestType) => {
+    return cardsInstance.post("", { params })
   },
-  deleteCardsPack: (params: DeleteCardsPackType) => {
+  deleteCard: (params: DeleteCardRequestType) => {
     return cardsInstance.delete("", { params })
   },
-  updateCardsPack: (params: UpdateCardsPackType) => {
-    return cardsInstance.put("", params)
+  updateCard: (params: UpdateCardRequestType) => {
+    return cardsInstance.put("", { params })
   },
 }

@@ -20,7 +20,6 @@ const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
   return authApi
     .login(arg)
     .then((res) => {
-      console.log(res.data)
       return { user: res.data }
     })
     .catch((e) => {

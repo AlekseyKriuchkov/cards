@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import {
   StyledProfileContainer,
@@ -8,14 +8,22 @@ import { useAuth } from "@/modules/auth/hooks/useAuth"
 import { ProfileLogOutButton } from "@/modules/auth/components/profile-logOut-button/profile-logOut-button"
 import { ProfileAvatar } from "@/modules/auth/components/profile-avatar/profile-avatar"
 import { ProfileUserName } from "@/modules/auth/components/profile-user-name/profile-user-name"
-import { BackToCardsButton } from "@/modules/auth/components/back-to-cards-button/back-to-cards-button"
+import { GoToButton } from "@/shared/go-to-button/go-to-button"
+import { useNavigate } from "react-router-dom"
 
 export const Profile = () => {
-  const { user, isLoading } = useAuth()
+  const { user, isLoading, isAuthorized } = useAuth()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isAuthorized) {
+      navigate("/sign-in")
+    }
+  }, [isAuthorized])
 
   return (
     <>
-      <BackToCardsButton />
+      <GoToButton text={"Go to Packs List"} />
       <StyledCard title={"Personal information"}>
         <StyledProfileContainer>
           <ProfileAvatar />

@@ -41,6 +41,9 @@
     "jsdom": "^21.1.0",
     "prettier": "^2.7.1",
     "prettier-config-nick": "^1.0.2",
+    "sass": "^1.69.7",
+    "scss": "^0.2.4",
+    "stylus": "^0.62.0",
     "typescript": "^5.0.2",
     "vite": "^4.0.0",
     "vitest": "^0.30.1"

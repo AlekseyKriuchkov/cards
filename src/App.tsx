@@ -5,11 +5,15 @@ import { GlobalStyle } from "@/global-style"
 import { ContentWrapper } from "@/modules/auth/pages/styles"
 import { useAppDispatch } from "@/app/hooks"
 import { authThunk } from "@/modules/auth/auth.slice"
+import { useEffect } from "react"
 
 const router = route()
 export const App = () => {
   const dispatch = useAppDispatch()
-  dispatch(authThunk.authMe())
+
+  useEffect(() => {
+    dispatch(authThunk.authMe())
+  }, [])
   return (
     <>
       <GlobalStyle />

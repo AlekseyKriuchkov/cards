@@ -9,8 +9,8 @@ import {
   SignUp,
 } from "@/modules/auth/pages"
 import { ErrorPage } from "@/modules/auth/pages/error404"
-import { Cards } from "@/modules/cards"
-import { Pack } from "@/modules/cards/components/learn-pack/pack"
+import { Pack } from "@/modules/packs/components/learn-pack/pack"
+import { Cards } from "@/modules/packs"
 
 export const route = () => {
   return createBrowserRouter([
@@ -19,11 +19,11 @@ export const route = () => {
       element: <Profile />,
     },
     {
-      path: "/cards",
+      path: "/packs",
       element: <Cards />,
     },
     {
-      path: "cards/pack/:id",
+      path: "packs/pack/:id",
       element: <Pack />,
     },
     {

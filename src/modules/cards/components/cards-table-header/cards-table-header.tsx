@@ -1,48 +1,55 @@
-import {
-  StyledAddNewPackButton,
-  StyledTableHeaderWrapper,
-  StyledTableTitle,
-} from "@/modules/cards/components/cards-table-header/styles"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { GoToButton } from "@/shared/go-to-button/go-to-button"
+import { StyledTableHeaderWrapper, StyledTableTitle } from "@/shared/styles"
 import React from "react"
-import { CardsModal } from "@/modules/cards/components/modal"
-import { AddNewPackModal } from "@/modules/cards/components/add-new-pack-modal/add-new-pack-modal"
-import { setModalType } from "@/modules/cards/cards.slice"
+import { useAppSelector } from "@/app/hooks"
+import { Space } from "antd"
+import { StyledHeaderPackButtons } from "@/modules/cards/components/cards-table-header/styles"
 
 export const CardsTableHeader = () => {
-  const isLoading = useAppSelector((state) => state.cards.isLoading)
-  const modalType = useAppSelector((state) => state.cards.modalType)
-  const dispatch = useAppDispatch()
-  const addNewPack = () => {
-    dispatch(
-      setModalType({
-        modalType: "addPack",
-      }),
-    )
-  }
+  const data = useAppSelector((state) => state.cards)
 
-  if (modalType?.modalType === "addPack") {
+  const isLoading = useAppSelector((state) => state.cards.isLoading)
+
+  const disabledLearnButton = isLoading ? true : !data.card?.cardsTotalCount
+
+  const myId = useAppSelector((state) => state.auth.user?._id)
+
+  const isMyPack = myId === data.card?.packUserId
+
+  if (isMyPack) {
     return (
       <div>
-        <CardsModal title={"Add new pack"}>
-          <AddNewPackModal />
-        </CardsModal>
+        <GoToButton text={"Go to Packs List"} />
         <StyledTableHeaderWrapper>
-          <StyledTableTitle>Packs list</StyledTableTitle>
-          <StyledAddNewPackButton disabled={isLoading} onClick={addNewPack}>
-            Add New Pack
-          </StyledAddNewPackButton>
+          <StyledTableTitle>{data.card?.packName}</StyledTableTitle>
+          <Space.Compact>
+            <StyledHeaderPackButtons disabled={isLoading}>
+              Edit Pack
+            </StyledHeaderPackButtons>
+            <StyledHeaderPackButtons disabled={isLoading}>
+              Delete Pack
+            </StyledHeaderPackButtons>
+            <StyledHeaderPackButtons disabled={disabledLearnButton}>
+              Learn Pack
+            </StyledHeaderPackButtons>
+            <StyledHeaderPackButtons disabled={isLoading}>
+              Add New Card
+            </StyledHeaderPackButtons>
+          </Space.Compact>
         </StyledTableHeaderWrapper>
       </div>
     )
   }
   return (
     <div>
+      <GoToButton text={"Go to Packs List"} />
       <StyledTableHeaderWrapper>
-        <StyledTableTitle>Packs list</StyledTableTitle>
-        <StyledAddNewPackButton disabled={isLoading} onClick={addNewPack}>
-          Add New Pack
-        </StyledAddNewPackButton>
+        <StyledTableTitle>{data.card?.packName}</StyledTableTitle>
+        <Space.Compact>
+          <StyledHeaderPackButtons disabled={disabledLearnButton}>
+            Learn Pack
+          </StyledHeaderPackButtons>
+        </Space.Compact>
       </StyledTableHeaderWrapper>
     </div>
   )
