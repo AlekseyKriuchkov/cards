@@ -1,31 +1,26 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from "antd"
 import { StyledPacksModalButtonsWrapper } from "@/modules/packs/components/styles"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import { packsThunk, setModalType } from "@/modules/packs/packs.slice"
+import { PacksModalType } from "@/modules/packs/api/types"
 
-export const EditPackModal = () => {
-  const modalType = useAppSelector((state) => state.packs.modalType)
-  const dispatch = useAppDispatch()
-  const onFinish = async (values: { name: string; private: boolean }) => {
-    if (modalType?.pack_id)
-      dispatch(
-        packsThunk.updateCardsPack({
-          cardsPack: { ...values, _id: modalType.pack_id },
-        }),
-      )
-    dispatch(setModalType(null))
-  }
-  const handleCancel = () => {
-    dispatch(setModalType(null))
-  }
+type PropsType = {
+  onSubmit: (values: { name: string; private: boolean }) => void
+  onCancel: () => void
+  modalType: PacksModalType
+}
+
+export const EditPackDialog: React.FC<PropsType> = ({
+  modalType,
+  onSubmit,
+  onCancel,
+}) => {
   return (
     <>
-      <Form onFinish={onFinish}>
+      <Form onFinish={onSubmit}>
         <Form.Item name="name">
           <Input
             placeholder={"Enter pack name"}
-            defaultValue={modalType?.pack_name}
+            defaultValue={modalType?.packName}
           />
         </Form.Item>
         <Form.Item name="private" valuePropName="checked">
@@ -38,7 +33,7 @@ export const EditPackModal = () => {
             </Button>
           </Form.Item>
           <Form.Item>
-            <Button type={"default"} onClick={handleCancel}>
+            <Button type={"default"} onClick={onCancel}>
               Cancel
             </Button>
           </Form.Item>
