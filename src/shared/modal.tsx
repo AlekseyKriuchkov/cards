@@ -1,17 +1,19 @@
 import React, { ReactNode } from "react"
 import { Modal } from "antd"
-import { useAppDispatch } from "@/app/hooks"
-import { setModalType } from "@/modules/packs/packs.slice"
 
 type PropsType = {
   title: string
   children: ReactNode
+  onClose: () => void
 }
 
-export const CardsModal: React.FC<PropsType> = ({ title, children }) => {
-  const dispatch = useAppDispatch()
+export const CardsModal: React.FC<PropsType> = ({
+  title,
+  children,
+  onClose,
+}) => {
   const handleCancel = () => {
-    dispatch(setModalType(null))
+    onClose()
   }
   return (
     <Modal
