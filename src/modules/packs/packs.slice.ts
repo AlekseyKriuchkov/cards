@@ -1,11 +1,10 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { packsApi } from "@/modules/packs/api/packs.api"
 import {
   CardPacksResponseType,
   DeleteCardsPackType,
   GetCardsPackType,
-  PacksModalType,
   NewCardsPackType,
   UpdateCardsPackType,
 } from "@/modules/packs/api/types"
@@ -22,8 +21,9 @@ const newPack = createAppAsyncThunk("packs/post", (arg: NewCardsPackType) => {
 })
 const updateCardsPack = createAppAsyncThunk(
   "packs/put",
-  (arg: UpdateCardsPackType) => {
-    return packsApi.updatePack(arg).then((res) => {
+  async (arg: UpdateCardsPackType) => {
+    await packsApi.updatePack(arg)
+    return await packsApi.getPacks(arg.params).then((res) => {
       return { cards: res.data }
     })
   },
@@ -41,13 +41,8 @@ const slice = createSlice({
   initialState: {
     cards: null as null | CardPacksResponseType,
     isLoading: false,
-    modalType: {} as PacksModalType,
   },
-  reducers: {
-    setModalType: (state, action: PayloadAction<PacksModalType>) => {
-      state.modalType = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setPacks.fulfilled, (state, action) => {
       state.cards = action.payload.cards
@@ -56,22 +51,41 @@ const slice = createSlice({
     builder.addCase(setPacks.pending, (state) => {
       state.isLoading = true
     })
+    builder.addCase(setPacks.rejected, (state) => {
+      state.isLoading = false
+    })
     builder.addCase(newPack.fulfilled, (state, action) => {
       state.cards = action.payload.cards
+      state.isLoading = false
+    })
+    builder.addCase(newPack.pending, (state, action) => {
+      state.isLoading = true
+    })
+    builder.addCase(newPack.rejected, (state, action) => {
       state.isLoading = false
     })
     builder.addCase(updateCardsPack.fulfilled, (state, action) => {
       state.cards = action.payload.cards
       state.isLoading = false
     })
+    builder.addCase(updateCardsPack.pending, (state, action) => {
+      state.isLoading = true
+    })
+    builder.addCase(updateCardsPack.rejected, (state, action) => {
+      state.isLoading = false
+    })
     builder.addCase(deletePack.fulfilled, (state, action) => {
       state.cards = action.payload.cards
       state.isLoading = false
     })
+    builder.addCase(deletePack.pending, (state, action) => {
+      state.isLoading = true
+    })
+    builder.addCase(deletePack.rejected, (state, action) => {
+      state.isLoading = false
+    })
   },
 })
-
-export const { setModalType } = slice.actions
 
 export const packsReducer = slice.reducer
 
