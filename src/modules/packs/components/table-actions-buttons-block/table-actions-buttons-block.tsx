@@ -8,8 +8,7 @@ import {
   CardsTableActionsBlockStyledButton,
   PacksTableActionsBlockStyledWrapper,
 } from "@/modules/packs/components/table-actions-buttons-block/styles"
-import { useAppDispatch } from "@/app/hooks"
-import { setModalType } from "@/modules/packs/packs.slice"
+import { PacksModalType } from "@/modules/packs/api/types"
 
 type PropsType = {
   isMyPack: boolean
@@ -17,6 +16,7 @@ type PropsType = {
   pack_name: string
   private_pack: boolean
   cardsCount: number
+  onActionClick: (modalData: PacksModalType) => void
 }
 
 export const TableActionsButtonsBlock: React.FC<PropsType> = ({
@@ -25,57 +25,35 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
   pack_name,
   private_pack,
   cardsCount,
+  onActionClick,
 }) => {
-  const dispatch = useAppDispatch()
-
   const deleteHandler = () => {
-    dispatch(
-      setModalType({
-        modalType: "delete",
-        pack_id: pack_id,
-        pack_name: pack_name,
-      }),
-    )
+    onActionClick({
+      actionType: "delete",
+      packId: pack_id,
+      packName: pack_name,
+    })
   }
   const editHandler = () => {
-    dispatch(
-      setModalType({
-        modalType: "edit",
-        pack_id: pack_id,
-        pack_name: pack_name,
-        private: private_pack,
-      }),
-    )
+    onActionClick({
+      actionType: "edit",
+      packId: pack_id,
+      packName: pack_name,
+      private: private_pack,
+    })
   }
   const learnHandler = () => {
-    dispatch(
-      setModalType({
-        modalType: "learn",
-        pack_id: pack_id,
-        pack_name: pack_name,
-      }),
-    )
+    // dispatch(
+    //   setModalType({
+    //     modalType: "learn",
+    //     pack_id: pack_id,
+    //     pack_name: pack_name,
+    //   }),
+    // )
   }
 
   const disabledButton = !cardsCount
 
-  if (isMyPack)
-    return (
-      <PacksTableActionsBlockStyledWrapper>
-        <CardsTableActionsBlockStyledButton
-          disabled={disabledButton}
-          onClick={learnHandler}
-        >
-          <PlaySquareOutlined />
-        </CardsTableActionsBlockStyledButton>
-        <CardsTableActionsBlockStyledButton onClick={editHandler}>
-          <EditOutlined />
-        </CardsTableActionsBlockStyledButton>
-        <CardsTableActionsBlockStyledButton onClick={deleteHandler}>
-          <DeleteOutlined />
-        </CardsTableActionsBlockStyledButton>
-      </PacksTableActionsBlockStyledWrapper>
-    )
   return (
     <PacksTableActionsBlockStyledWrapper>
       <CardsTableActionsBlockStyledButton
@@ -84,6 +62,16 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
       >
         <PlaySquareOutlined />
       </CardsTableActionsBlockStyledButton>
+      {isMyPack ? (
+        <>
+          <CardsTableActionsBlockStyledButton onClick={editHandler}>
+            <EditOutlined />
+          </CardsTableActionsBlockStyledButton>
+          <CardsTableActionsBlockStyledButton onClick={deleteHandler}>
+            <DeleteOutlined />
+          </CardsTableActionsBlockStyledButton>
+        </>
+      ) : null}
     </PacksTableActionsBlockStyledWrapper>
   )
 }
