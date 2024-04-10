@@ -2,8 +2,11 @@ import React from "react"
 import { useAppSelector } from "@/app/hooks"
 import { TableActionsButtonsBlock } from "@/modules/packs/components/table-actions-buttons-block/table-actions-buttons-block"
 import { NavLink } from "react-router-dom"
+import { PacksModalType } from "@/modules/packs/api/types"
 
-export const UsePacksData = () => {
+export const usePacksData = (
+  onActionClick: (modalData: PacksModalType) => void,
+) => {
   const myId = useAppSelector((state) => state.auth.user?._id)
   const tableData = useAppSelector((state) => state.packs.cards?.cardPacks)
 
@@ -67,9 +70,10 @@ export const UsePacksData = () => {
           private_pack={pack.private}
           isMyPack={isMyPack}
           cardsCount={pack.cardsCount}
+          onActionClick={onActionClick}
         />
       ),
     }
   })
-  return { rows, columns }
+  return { rows, columns, onActionClick }
 }
