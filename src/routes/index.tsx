@@ -10,7 +10,7 @@ import {
 } from "@/modules/auth/pages"
 import { ErrorPage } from "@/modules/auth/pages/error404"
 import { Pack } from "@/modules/packs/components/learn-pack/pack"
-import { Cards } from "@/modules/packs"
+import { Packs } from "@/modules/packs"
 
 export const route = () => {
   return createBrowserRouter([
@@ -20,7 +20,7 @@ export const route = () => {
     },
     {
       path: "/packs",
-      element: <Cards />,
+      element: <Packs />,
     },
     {
       path: "packs/pack/:id",
