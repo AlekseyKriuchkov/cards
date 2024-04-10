@@ -2,29 +2,27 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { packsThunk } from "@/modules/packs/packs.slice"
 import { Table, TablePaginationConfig } from "antd"
 import React from "react"
-import { UsePacksData } from "@/modules/packs/hooks/use-packs-data"
-import { CardsModal } from "@/shared/modal"
-import { DeletePackModal } from "@/modules/packs/components/delete-pack-modal/delete-pack-modal"
-import { EditPackModal } from "@/modules/packs/components/edit-pack-modal/edit-pack-modal"
+import { usePacksData } from "@/modules/packs/hooks/use-packs-data"
 import { FilterValue } from "antd/es/table/interface"
-import { useNavigate } from "react-router-dom"
 import { ParamsPropsType } from "@/modules/packs"
+import { PacksModalType } from "@/modules/packs/api/types"
 
-export const PacksTable: React.FC<ParamsPropsType> = ({
+interface PacksTableProps extends ParamsPropsType {
+  onActionClick: (modalData: PacksModalType) => void
+}
+
+export const PacksTable: React.FC<PacksTableProps> = ({
   params,
   setParams,
+  onActionClick,
 }) => {
   const dispatch = useAppDispatch()
-
-  const navigate = useNavigate()
 
   const tableData = useAppSelector((state) => state.packs.cards)
 
   const isLoading = useAppSelector((state) => state.packs.isLoading)
 
-  const modalType = useAppSelector((state) => state.packs.modalType)
-
-  const { rows, columns } = UsePacksData()
+  const { rows, columns } = usePacksData(onActionClick)
 
   const onChange = (
     pagination: TablePaginationConfig,
@@ -51,76 +49,24 @@ export const PacksTable: React.FC<ParamsPropsType> = ({
       pageCount: pagination.pageSize,
     })
   }
-  if (modalType?.modalType === "delete") {
-    return (
-      <>
-        <CardsModal title={"Delete pack"}>
-          <DeletePackModal
-            pack_name={modalType.pack_name ? modalType.pack_name : ""}
-            pack_id={modalType.pack_id ? modalType.pack_id : ""}
-          />
-        </CardsModal>
-        <Table
-          size={"small"}
-          columns={columns}
-          dataSource={rows}
-          scroll={{ y: 390 }}
-          pagination={{
-            pageSizeOptions: ["10", "20", "50"],
-            showQuickJumper: true,
-            showSizeChanger: true,
-            total: tableData?.cardPacksTotalCount,
-            current: params.page,
-            pageSize: params.pageCount,
-          }}
-          onChange={onChange}
-        />
-      </>
-    )
-  }
-  if (modalType?.modalType === "edit") {
-    return (
-      <>
-        <CardsModal title={"Edit pack"}>
-          <EditPackModal />
-        </CardsModal>
-        <Table
-          size={"small"}
-          columns={columns}
-          dataSource={rows}
-          scroll={{ y: 390 }}
-          pagination={{
-            pageSizeOptions: ["10", "20", "50"],
-            showQuickJumper: true,
-            showSizeChanger: true,
-            total: tableData?.cardPacksTotalCount,
-            current: params.page,
-            pageSize: params.pageCount,
-          }}
-          onChange={onChange}
-        />
-      </>
-    )
-  }
-  if (modalType?.modalType === "learn") {
-    navigate(`/packs/pack/${modalType.pack_id}`)
-  }
   return (
-    <Table
-      size={"small"}
-      columns={columns}
-      dataSource={rows}
-      scroll={{ y: 390 }}
-      loading={isLoading}
-      pagination={{
-        pageSizeOptions: ["10", "20", "50"],
-        showQuickJumper: true,
-        showSizeChanger: true,
-        total: tableData?.cardPacksTotalCount,
-        current: params.page,
-        pageSize: params.pageCount,
-      }}
-      onChange={onChange}
-    />
+    <>
+      <Table
+        size={"small"}
+        columns={columns}
+        dataSource={rows}
+        scroll={{ y: 390 }}
+        loading={isLoading}
+        pagination={{
+          pageSizeOptions: ["10", "20", "50"],
+          showQuickJumper: true,
+          showSizeChanger: true,
+          total: tableData?.cardPacksTotalCount,
+          current: params.page,
+          pageSize: params.pageCount,
+        }}
+        onChange={onChange}
+      />
+    </>
   )
 }
