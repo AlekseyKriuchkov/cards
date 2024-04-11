@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { packsApi } from "@/modules/packs/api/packs.api"
 import {
@@ -6,25 +6,25 @@ import {
   DeleteCardsPackType,
   GetCardsPackType,
   NewCardsPackType,
+  PackResponseType,
   UpdateCardsPackType,
 } from "@/modules/packs/api/types"
 
 const setPacks = createAppAsyncThunk("packs/get", (arg: GetCardsPackType) => {
   return packsApi.getPacks(arg).then((res) => {
-    return { cards: res.data }
+    return { payload: res.data }
   })
 })
 const newPack = createAppAsyncThunk("packs/post", (arg: NewCardsPackType) => {
   return packsApi.newPack(arg).then((res) => {
-    return { cards: res.data }
+    return { payload: res.data }
   })
 })
 const updateCardsPack = createAppAsyncThunk(
   "packs/put",
   async (arg: UpdateCardsPackType) => {
-    await packsApi.updatePack(arg)
-    return await packsApi.getPacks(arg.params).then((res) => {
-      return { cards: res.data }
+    return packsApi.updatePack(arg).then((res) => {
+      return { payload: res.data }
     })
   },
 )
@@ -32,20 +32,20 @@ const deletePack = createAppAsyncThunk(
   "packs/delete",
   (arg: DeleteCardsPackType) => {
     return packsApi.deletePack(arg).then((res) => {
-      return { cards: res.data }
+      return { payload: res.data }
     })
   },
 )
 const slice = createSlice({
   name: "cards",
   initialState: {
-    cards: null as null | CardPacksResponseType,
+    cards: {} as CardPacksResponseType,
     isLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setPacks.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
+      state.cards = action.payload.payload
       state.isLoading = false
     })
     builder.addCase(setPacks.pending, (state) => {
@@ -54,34 +54,54 @@ const slice = createSlice({
     builder.addCase(setPacks.rejected, (state) => {
       state.isLoading = false
     })
-    builder.addCase(newPack.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
-      state.isLoading = false
-    })
-    builder.addCase(newPack.pending, (state, action) => {
+    builder.addCase(
+      newPack.fulfilled,
+      (state, action: PayloadAction<{ payload: PackResponseType }>) => {
+        state.cards.cardPacks.unshift(action.payload.payload.newCardsPack)
+        state.isLoading = false
+      },
+    )
+    builder.addCase(newPack.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(newPack.rejected, (state, action) => {
+    builder.addCase(newPack.rejected, (state) => {
       state.isLoading = false
     })
-    builder.addCase(updateCardsPack.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
-      state.isLoading = false
-    })
-    builder.addCase(updateCardsPack.pending, (state, action) => {
+    builder.addCase(
+      updateCardsPack.fulfilled,
+      (state, action: PayloadAction<{ payload: PackResponseType }>) => {
+        const updatedCardIndex = state.cards.cardPacks.findIndex(
+          (pack) => pack._id === action.payload.payload.updatedCardsPack._id,
+        )
+        if (updatedCardIndex > -1) {
+          state.cards.cardPacks[updatedCardIndex] =
+            action.payload.payload.updatedCardsPack
+        }
+        state.isLoading = false
+      },
+    )
+    builder.addCase(updateCardsPack.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(updateCardsPack.rejected, (state, action) => {
+    builder.addCase(updateCardsPack.rejected, (state) => {
       state.isLoading = false
     })
-    builder.addCase(deletePack.fulfilled, (state, action) => {
-      state.cards = action.payload.cards
-      state.isLoading = false
-    })
-    builder.addCase(deletePack.pending, (state, action) => {
+    builder.addCase(
+      deletePack.fulfilled,
+      (state, action: PayloadAction<{ payload: PackResponseType }>) => {
+        const deletedCardIndex = state.cards.cardPacks.findIndex(
+          (pack) => pack._id === action.payload.payload.deletedCardsPack._id,
+        )
+        if (deletedCardIndex > -1) {
+          state.cards.cardPacks.splice(deletedCardIndex, 1)
+        }
+        state.isLoading = false
+      },
+    )
+    builder.addCase(deletePack.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(deletePack.rejected, (state, action) => {
+    builder.addCase(deletePack.rejected, (state) => {
       state.isLoading = false
     })
   },
