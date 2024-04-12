@@ -69,5 +69,5 @@ export type UpdateCardRequestType = {
 }
 
 export type CardsModalType = {
-  modalType: "delete" | "edit" | "learn" | "addCard" | null
+  modalType: "delete" | "edit" | "addCard" | null
 }
