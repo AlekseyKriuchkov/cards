@@ -1,3 +1,13 @@
+export type PackResponseType = {
+  [key in
+    | "newCardsPack"
+    | "deletedCardsPack"
+    | "updatedCardsPack"]: CardsPackType
+} & {
+  token: string
+  tokenDeathTime: number
+}
+
 export type CardPacksResponseType = {
   cardPacks: CardsPackType[]
   cardPacksTotalCount: number
