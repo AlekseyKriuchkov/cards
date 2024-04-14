@@ -16,7 +16,7 @@ export const PacksToggleButtons: React.FC<ParamsPropsType> = ({
   const isLoading = useAppSelector((state) => state.packs.isLoading)
   const setAll = () => {
     setToggleAll(true)
-    setParams({ ...params, user_id: user?._id })
+    setParams({ ...params, user_id: undefined })
     dispatch(
       packsThunk.setPacks({
         page: data.cards?.page,
