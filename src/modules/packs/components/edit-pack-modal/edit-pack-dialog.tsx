@@ -16,15 +16,18 @@ export const EditPackDialog: React.FC<PropsType> = ({
 }) => {
   return (
     <>
-      <Form onFinish={onSubmit}>
+      <Form
+        onFinish={onSubmit}
+        initialValues={{
+          private: modalType?.private,
+          name: modalType?.packName,
+        }}
+      >
         <Form.Item name="name">
-          <Input
-            placeholder={"Enter pack name"}
-            defaultValue={modalType?.packName}
-          />
+          <Input placeholder={"Enter pack name"} />
         </Form.Item>
         <Form.Item name="private" valuePropName="checked">
-          <Checkbox defaultChecked={modalType?.private}>Private</Checkbox>
+          <Checkbox>Private</Checkbox>
         </Form.Item>
         <StyledPacksModalButtonsWrapper>
           <Form.Item>
