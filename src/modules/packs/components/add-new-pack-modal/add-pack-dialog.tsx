@@ -1,32 +1,16 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from "antd"
-import { useAppDispatch } from "@/app/hooks"
 import { StyledPacksModalButtonsWrapper } from "@/modules/packs/components/styles"
-import { PacksModalType } from "@/modules/packs/api/types"
-import { packsThunk } from "@/modules/packs/packs.slice"
 
 type PropsType = {
   onCancel: () => void
-  setModalType: (modalData: PacksModalType) => void
+  onSubmit: (values: { value: string; private: boolean }) => void
 }
 
-export const AddPackDialog: React.FC<PropsType> = ({
-  onCancel,
-  setModalType,
-}) => {
-  const dispatch = useAppDispatch()
-  const onFinish = (values: { value: string; private: boolean }) => {
-    console.log(values)
-    dispatch(
-      packsThunk.newPack({
-        cardsPack: { name: values.value, private: values.private },
-      }),
-    )
-    setModalType(null)
-  }
+export const AddPackDialog: React.FC<PropsType> = ({ onCancel, onSubmit }) => {
   return (
     <Form
-      onFinish={onFinish}
+      onFinish={onSubmit}
       initialValues={{
         private: false,
       }}
