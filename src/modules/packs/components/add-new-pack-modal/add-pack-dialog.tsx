@@ -1,24 +1,36 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from "antd"
 import { useAppDispatch } from "@/app/hooks"
-import { packsThunk, setModalType } from "@/modules/packs/packs.slice"
 import { StyledPacksModalButtonsWrapper } from "@/modules/packs/components/styles"
+import { PacksModalType } from "@/modules/packs/api/types"
+import { packsThunk } from "@/modules/packs/packs.slice"
 
-export const AddNewPackModal = () => {
+type PropsType = {
+  onCancel: () => void
+  setModalType: (modalData: PacksModalType) => void
+}
+
+export const AddPackDialog: React.FC<PropsType> = ({
+  onCancel,
+  setModalType,
+}) => {
   const dispatch = useAppDispatch()
-  const onFinish = async (values: { value: string }) => {
+  const onFinish = (values: { value: string; private: boolean }) => {
+    console.log(values)
     dispatch(
       packsThunk.newPack({
-        cardsPack: { name: values.value, private: !!values.value },
+        cardsPack: { name: values.value, private: values.private },
       }),
     )
-    dispatch(setModalType(null))
-  }
-  const handleCancel = () => {
-    dispatch(setModalType(null))
+    setModalType(null)
   }
   return (
-    <Form onFinish={onFinish}>
+    <Form
+      onFinish={onFinish}
+      initialValues={{
+        private: false,
+      }}
+    >
       <Form.Item name="value">
         <Input placeholder={"Enter pack name"} />
       </Form.Item>
@@ -32,7 +44,7 @@ export const AddNewPackModal = () => {
           </Button>
         </Form.Item>
         <Form.Item>
-          <Button type={"default"} onClick={handleCancel}>
+          <Button type={"default"} onClick={onCancel}>
             Cancel
           </Button>
         </Form.Item>
