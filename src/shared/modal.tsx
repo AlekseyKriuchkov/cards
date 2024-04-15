@@ -12,17 +12,8 @@ export const CardsModal: React.FC<PropsType> = ({
   children,
   onClose,
 }) => {
-  const handleCancel = () => {
-    onClose()
-  }
   return (
-    <Modal
-      centered
-      footer={null}
-      title={title}
-      open={true}
-      onCancel={handleCancel}
-    >
+    <Modal centered footer={null} title={title} open={true} onCancel={onClose}>
       {children}
     </Modal>
   )
