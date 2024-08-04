@@ -1,7 +1,7 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from "antd"
 import { StyledPacksModalButtonsWrapper } from "@/modules/packs/components/styles"
-import { PacksModalType } from "@/modules/packs/api/types"
+import { PacksModalType } from "@/modules/packs/types"
 
 type PropsType = {
   onSubmit: (values: { name: string; private: boolean }) => void

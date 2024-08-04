@@ -5,7 +5,7 @@ import {
   GetPackCardsType,
   NewCardRequestType,
   UpdateCardRequestType,
-} from "@/modules/cards/api/types"
+} from "@/modules/cards/types"
 
 export const cardsApi = {
   getCards: (params: GetPackCardsType) => {

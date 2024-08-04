@@ -1,12 +1,11 @@
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import {
-  CardsModalType,
   DeleteCardRequestType,
   GetPackCardsResponseType,
   GetPackCardsType,
   NewCardRequestType,
   UpdateCardRequestType,
-} from "@/modules/cards/api/types"
+} from "@/modules/cards/types"
 import { cardsApi } from "@/modules/cards/api/cards.api"
 import { createSlice } from "@reduxjs/toolkit"
 
@@ -42,7 +41,6 @@ const slice = createSlice({
   initialState: {
     card: null as null | GetPackCardsResponseType,
     isLoading: false,
-    modalType: {} as CardsModalType,
   },
   reducers: {},
   extraReducers: (builder) => {

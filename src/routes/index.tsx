@@ -9,8 +9,9 @@ import {
   SignUp,
 } from "@/modules/auth/pages"
 import { ErrorPage } from "@/modules/auth/pages/error404"
-import { Pack } from "@/modules/packs/components/learn-pack/pack"
-import { Packs } from "@/modules/packs"
+import { CardsPage } from "@/modules/cards/components/cards-page/cards-page"
+import { PacksPage } from "@/modules/packs"
+import { LearnPage } from "@/modules/cards/components/learn-page/learn-page"
 
 export const route = () => {
   return createBrowserRouter([
@@ -20,11 +21,15 @@ export const route = () => {
     },
     {
       path: "/packs",
-      element: <Packs />,
+      element: <PacksPage />,
     },
     {
       path: "packs/pack/:id",
-      element: <Pack />,
+      element: <CardsPage />,
+    },
+    {
+      path: "learn/:id",
+      element: <LearnPage />,
     },
     {
       path: "/check-email",

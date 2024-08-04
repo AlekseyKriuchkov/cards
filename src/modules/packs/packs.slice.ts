@@ -8,7 +8,7 @@ import {
   NewCardsPackType,
   PackResponseType,
   UpdateCardsPackType,
-} from "@/modules/packs/api/types"
+} from "@/modules/packs/types"
 
 const setPacks = createAppAsyncThunk("packs/get", (arg: GetCardsPackType) => {
   return packsApi.getPacks(arg).then((res) => {

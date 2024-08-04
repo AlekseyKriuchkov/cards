@@ -2,7 +2,7 @@ import React from "react"
 import { useAppSelector } from "@/app/hooks"
 import { TableActionsButtonsBlock } from "@/modules/packs/components/table-actions-buttons-block/table-actions-buttons-block"
 import { NavLink } from "react-router-dom"
-import { PacksModalType } from "@/modules/packs/api/types"
+import { PacksModalType } from "@/modules/packs/types"
 
 export const usePacksData = (
   onActionClick: (modalData: PacksModalType) => void,

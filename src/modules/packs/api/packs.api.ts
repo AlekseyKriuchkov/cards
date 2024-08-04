@@ -4,7 +4,7 @@ import {
   GetCardsPackType,
   NewCardsPackType,
   UpdateCardsPackType,
-} from "@/modules/packs/api/types"
+} from "@/modules/packs/types"
 import { packsInstance } from "@/modules/packs/api/packs.instance"
 
 export const packsApi = {

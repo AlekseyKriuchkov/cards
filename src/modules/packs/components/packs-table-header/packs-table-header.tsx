@@ -1,25 +1,19 @@
 import { StyledAddNewPackButton } from "@/modules/packs/components/packs-table-header/styles"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import React from "react"
+import React, { useState } from "react"
 import { CardsModal } from "@/shared/modal"
 import { AddPackDialog } from "@/modules/packs/components/add-new-pack-modal/add-pack-dialog"
 import { StyledTableHeaderWrapper, StyledTableTitle } from "@/shared/styles"
-import { PacksModalType } from "@/modules/packs/api/types"
 import { packsThunk } from "@/modules/packs/packs.slice"
 
-export const PacksTableHeader = ({
-  modalType,
-  setModalType,
-}: {
-  modalType: PacksModalType
-  setModalType: (modalData: PacksModalType) => void
-}) => {
+export const PacksTableHeader = () => {
   const dispatch = useAppDispatch()
+
+  const [isAddPackModalOpen, setIsAddPackModalOpen] = useState(false)
+
   const isLoading = useAppSelector((state) => state.packs.isLoading)
   const openDialogAddNewPack = () => {
-    setModalType({
-      actionType: "addPack",
-    })
+    setIsAddPackModalOpen(true)
   }
   const addNewPack = (values: { value: string; private: boolean }) => {
     dispatch(
@@ -27,14 +21,17 @@ export const PacksTableHeader = ({
         cardsPack: { name: values.value, private: values.private },
       }),
     )
-    setModalType(null)
+    setIsAddPackModalOpen(false)
   }
   return (
     <>
-      {modalType?.actionType === "addPack" && (
-        <CardsModal title={"Add new pack"} onClose={() => setModalType(null)}>
+      {isAddPackModalOpen && (
+        <CardsModal
+          title={"Add new pack"}
+          onClose={() => setIsAddPackModalOpen(false)}
+        >
           <AddPackDialog
-            onCancel={() => setModalType(null)}
+            onCancel={() => setIsAddPackModalOpen(false)}
             onSubmit={(values) => addNewPack(values)}
           />
         </CardsModal>

@@ -28,14 +28,34 @@ export type CardsPackType = {
   private: boolean
   deckCover: string
 }
+export type PacksParams = {
+  packName?: string
+  min?: number
+  max?: number
+  page?: number
+  pageCount?: number
+  sortPacks?: string
+  user_id?: string
+}
+
+export type UrlPacksParams = {
+  packName?: string
+  min?: string | null
+  max?: string
+  page?: string
+  pageCount?: string
+  sortPacks?: string
+  user_id?: string
+}
+
 export type GetCardsPackType = {
   packName?: string
   min?: number
   max?: number
   page?: number
   pageCount?: number
-  user_id?: string
   block?: boolean
+  user_id?: string
   sortPacks?: string
 }
 export type NewCardsPackType = {
@@ -57,7 +77,7 @@ export type UpdateCardsPackType = {
   }
 }
 export type PacksModalType = {
-  actionType: "delete" | "edit" | "addPack"
+  actionType: "delete" | "edit"
   packId?: string
   packName?: string
   private?: boolean

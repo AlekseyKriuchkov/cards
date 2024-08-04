@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Slider } from "antd"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { packsThunk } from "@/modules/packs/packs.slice"
-import { ParamsPropsType } from "@/modules/packs"
+import { PacksParams } from "@/modules/packs/types"
 
-export const PacksToolbarSlider: React.FC<ParamsPropsType> = ({
+type PropsType = {
+  params: PacksParams
+  setParams: Dispatch<SetStateAction<PacksParams>>
+  handleSetTableSlider: (value: [number, number]) => void
+}
+
+export const PacksToolbarSlider: React.FC<PropsType> = ({
+  handleSetTableSlider,
   params,
   setParams,
 }) => {
+  console.log(params.min)
   const data = useAppSelector((state) => state.packs.cards)
   const isLoading = useAppSelector((state) => state.packs.isLoading)
-  const dispatch = useAppDispatch()
 
-  const minCount = params.min ? params.min : 0
-  const maxCount = params.max ? params.max : 100
-
-  const [value, setValue] = useState([minCount, maxCount])
+  const [minMaxValues, setMinMaxValues] = useState([0, 100])
+  const [value, setValue] = useState([minMaxValues[0], minMaxValues[1]])
 
   useEffect(() => {
-    setValue([params.min || 0, params.max || 100])
-  }, [params.max, params.min])
+    setValue([data.minCardsCount, data.maxCardsCount || 100])
+  }, [data.minCardsCount, data.maxCardsCount])
+
+  useEffect(() => {
+    setMinMaxValues([data.minCardsCount, data.maxCardsCount])
+  }, [data.minCardsCount, data.maxCardsCount])
 
   const onChangeValue = (value: [number, number]) => {
     setValue(value)
   }
 
   const onAfterChange = (value: [number, number]) => {
-    dispatch(
-      packsThunk.setPacks({
-        ...params,
-        min: value[0],
-        max: value[1],
-      }),
-    )
-    setParams({ ...params, min: value[0], max: value[1] })
+    handleSetTableSlider(value)
   }
 
   return (
@@ -42,8 +44,8 @@ export const PacksToolbarSlider: React.FC<ParamsPropsType> = ({
         disabled={isLoading}
         range
         value={[value[0], value[1]]}
-        min={data?.minCardsCount}
-        max={data?.maxCardsCount}
+        min={minMaxValues[0]}
+        max={minMaxValues[1]}
         onAfterChange={onAfterChange}
         onChange={onChangeValue}
       />

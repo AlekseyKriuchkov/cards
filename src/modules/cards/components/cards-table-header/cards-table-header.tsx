@@ -4,9 +4,19 @@ import React from "react"
 import { useAppSelector } from "@/app/hooks"
 import { Space } from "antd"
 import { StyledHeaderPackButtons } from "@/modules/cards/components/cards-table-header/styles"
+import { CardsModalType } from "@/modules/cards/types"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
 
-export const CardsTableHeader = () => {
+type PropsType = {
+  setModalType: (ModalType: CardsModalType) => void
+}
+
+export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
   const data = useAppSelector((state) => state.cards)
+
+  const { id } = useParams()
+
+  const navigate = useNavigate()
 
   const isLoading = useAppSelector((state) => state.cards.isLoading)
 
@@ -16,6 +26,10 @@ export const CardsTableHeader = () => {
 
   const isMyPack = myId === data.card?.packUserId
 
+  // const handleGoToLearn = () => {
+  //   navigate(`/learn${id}`)
+  // }
+
   if (isMyPack) {
     return (
       <div>
@@ -23,16 +37,28 @@ export const CardsTableHeader = () => {
         <StyledTableHeaderWrapper>
           <StyledTableTitle>{data.card?.packName}</StyledTableTitle>
           <Space.Compact>
-            <StyledHeaderPackButtons disabled={isLoading}>
+            <StyledHeaderPackButtons
+              onClick={() =>
+                setModalType({
+                  actionType: "edit",
+                  packName: data.card?.packName,
+                  private: data.card?.packPrivate,
+                })
+              }
+              disabled={isLoading}
+            >
               Edit Pack
             </StyledHeaderPackButtons>
-            <StyledHeaderPackButtons disabled={isLoading}>
+            <StyledHeaderPackButtons
+              onClick={() => setModalType({ actionType: "delete" })}
+              disabled={isLoading}
+            >
               Delete Pack
             </StyledHeaderPackButtons>
             <StyledHeaderPackButtons disabled={disabledLearnButton}>
-              Learn Pack
+              <NavLink to={`/learn/${id}`}>Learn Pack</NavLink>
             </StyledHeaderPackButtons>
-            <StyledHeaderPackButtons disabled={isLoading}>
+            <StyledHeaderPackButtons onClick={() => {}} disabled={isLoading}>
               Add New Card
             </StyledHeaderPackButtons>
           </Space.Compact>

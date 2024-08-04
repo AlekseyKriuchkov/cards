@@ -8,7 +8,7 @@ import {
   CardsTableActionsBlockStyledButton,
   PacksTableActionsBlockStyledWrapper,
 } from "@/modules/packs/components/table-actions-buttons-block/styles"
-import { PacksModalType } from "@/modules/packs/api/types"
+import { PacksModalType } from "@/modules/packs/types"
 
 type PropsType = {
   isMyPack: boolean
