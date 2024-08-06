@@ -5,7 +5,7 @@ import { useAppSelector } from "@/app/hooks"
 import { Space } from "antd"
 import { StyledHeaderPackButtons } from "@/modules/cards/components/cards-table-header/styles"
 import { CardsModalType } from "@/modules/cards/types"
-import { NavLink, useNavigate, useParams } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 
 type PropsType = {
   setModalType: (ModalType: CardsModalType) => void
@@ -16,8 +16,6 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
 
   const { id } = useParams()
 
-  const navigate = useNavigate()
-
   const isLoading = useAppSelector((state) => state.cards.isLoading)
 
   const disabledLearnButton = isLoading ? true : !data.card?.cardsTotalCount
@@ -25,10 +23,6 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
   const myId = useAppSelector((state) => state.auth.user?._id)
 
   const isMyPack = myId === data.card?.packUserId
-
-  // const handleGoToLearn = () => {
-  //   navigate(`/learn${id}`)
-  // }
 
   if (isMyPack) {
     return (

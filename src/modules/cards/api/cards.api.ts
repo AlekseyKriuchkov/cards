@@ -1,9 +1,13 @@
-import { cardsInstance } from "@/modules/cards/api/cards.instance"
+import {
+  cardsInstance,
+  updateGradeInstance,
+} from "@/modules/cards/api/cards.instance"
 import {
   DeleteCardRequestType,
   GetPackCardsResponseType,
   GetPackCardsType,
   NewCardRequestType,
+  UpdateCardGradeRequestType,
   UpdateCardRequestType,
 } from "@/modules/cards/types"
 
@@ -19,5 +23,8 @@ export const cardsApi = {
   },
   updateCard: (params: UpdateCardRequestType) => {
     return cardsInstance.put("", { params })
+  },
+  updateGrade: (params: UpdateCardGradeRequestType) => {
+    return updateGradeInstance.put("", params)
   },
 }

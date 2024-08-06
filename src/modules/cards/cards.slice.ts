@@ -4,6 +4,7 @@ import {
   GetPackCardsResponseType,
   GetPackCardsType,
   NewCardRequestType,
+  UpdateCardGradeRequestType,
   UpdateCardRequestType,
 } from "@/modules/cards/types"
 import { cardsApi } from "@/modules/cards/api/cards.api"
@@ -35,6 +36,14 @@ const updateCard = createAppAsyncThunk(
     })
   },
 )
+const updateGrade = createAppAsyncThunk(
+  "cards/grade",
+  (arg: UpdateCardGradeRequestType) => {
+    return cardsApi.updateGrade(arg).then((res) => {
+      return { card: res.data }
+    })
+  },
+)
 
 const slice = createSlice({
   name: "pack",
@@ -48,7 +57,7 @@ const slice = createSlice({
       state.card = action.payload.card
       state.isLoading = false
     })
-    builder.addCase(setCards.pending, (state, action) => {
+    builder.addCase(setCards.pending, (state) => {
       state.isLoading = true
     })
     builder.addCase(newCard.fulfilled, (state, action) => {
@@ -60,9 +69,31 @@ const slice = createSlice({
     builder.addCase(updateCard.fulfilled, (state, action) => {
       state.card = action.payload.card
     })
+    builder.addCase(updateGrade.fulfilled, (state, action) => {
+      const updatedCardIndex = state.card?.cards.findIndex(
+        (card) => card._id === action.payload.card._id,
+      )
+      if (
+        updatedCardIndex !== undefined &&
+        updatedCardIndex > -1 &&
+        state.card !== null
+      ) {
+        state.card.cards[updatedCardIndex] = action.payload.card
+      }
+      state.isLoading = false
+    })
+    builder.addCase(updateGrade.pending, (state) => {
+      state.isLoading = true
+    })
   },
 })
 
 export const cardsReducer = slice.reducer
 
-export const cardsThunk = { setCards, newCard, deleteCard, updateCard }
+export const cardsThunk = {
+  setCards,
+  newCard,
+  deleteCard,
+  updateCard,
+  updateGrade,
+}

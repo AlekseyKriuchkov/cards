@@ -1,15 +1,17 @@
-import React from "react"
+import React, { useState } from "react"
 import { StyledLearnAnswer } from "@/modules/cards/components/learn-answer/styles"
 import { StyledLearnCardButton } from "@/modules/cards/components/learn-page/styles"
 import { Text } from "@/modules/auth/pages/profile/style"
 import { Rate } from "antd"
-import { LearnCards } from "@/modules/cards/components/learn-page/learn-page"
+import { CardType } from "@/modules/cards/types"
+import { useAppDispatch } from "@/app/hooks"
+import { cardsThunk } from "@/modules/cards/cards.slice"
 
 type Props = {
   setIsShowAnswer: (value: boolean) => void
   setCurrentQuestionIndex: (index: number) => void
   currentQuestionIndex: number
-  sortedCards: LearnCards[]
+  sortedCards: CardType[]
 }
 
 export const LearnAnswer: React.FC<Props> = ({
@@ -18,7 +20,18 @@ export const LearnAnswer: React.FC<Props> = ({
   currentQuestionIndex,
   setCurrentQuestionIndex,
 }) => {
+  const dispatch = useAppDispatch()
+
+  const [rating, setRating] = useState(0)
+
   const handleNextQuestion = () => {
+    dispatch(
+      cardsThunk.updateGrade({
+        grade: rating,
+        card_id: sortedCards[currentQuestionIndex]._id,
+      }),
+    )
+    console.log(rating)
     setIsShowAnswer(false)
     setCurrentQuestionIndex(currentQuestionIndex + 1)
   }
@@ -37,7 +50,7 @@ export const LearnAnswer: React.FC<Props> = ({
         <Rate
           defaultValue={sortedCards[currentQuestionIndex].grade}
           onChange={(value) => {
-            console.log(value)
+            setRating(value)
           }}
         />
         <StyledLearnCardButton onClick={handleNextQuestion}>

@@ -1,27 +1,34 @@
 import React, { useState } from "react"
 import { LearnAnswer } from "@/modules/cards/components/learn-answer/learn-answer"
 import { LearnSuccess } from "@/modules/cards/components/learn-success/learn-success"
-import { LearnCards } from "@/modules/cards/components/learn-page/learn-page"
 import {
   StyledLearnCardButton,
   StyledLearnQuestion,
   StyledLearnQuestionWrapper,
 } from "@/modules/cards/components/learn-page/styles"
-import { Typography } from "antd"
+import { Skeleton, Typography } from "antd"
+import { CardType } from "@/modules/cards/types"
+import { useAppSelector } from "@/app/hooks"
 
 const { Text } = Typography
 
 type PropsType = {
-  sortedCards: LearnCards[]
+  sortedCards: CardType[]
 }
 
 export const LearnCard: React.FC<PropsType> = ({ sortedCards }) => {
+  const isLoading = useAppSelector((state) => state.cards.isLoading)
+
   const [isShowAnswer, setIsShowAnswer] = useState(false)
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
   const handleShowAnswer = () => {
     setIsShowAnswer(true)
+  }
+
+  if (isLoading) {
+    return <Skeleton active title={false} />
   }
 
   if (currentQuestionIndex >= sortedCards.length || currentQuestionIndex >= 10)

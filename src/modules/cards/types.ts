@@ -24,7 +24,7 @@ export type GetPackCardsResponseType = {
   token: string
   tokenDeathTime: number
 }
-type CardType = {
+export type CardType = {
   _id: string
   cardsPack_id: string
   user_id: string
@@ -74,3 +74,8 @@ export type CardsModalType = {
   packName?: string
   private?: boolean
 } | null
+
+export type UpdateCardGradeRequestType = {
+  grade: number
+  card_id: string
+}
