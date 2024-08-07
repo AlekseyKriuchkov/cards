@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/app/hooks"
-import { Pagination, Table, TablePaginationConfig } from "antd"
+import { Pagination, Skeleton, Table, TablePaginationConfig } from "antd"
 import React from "react"
 import { usePacksData } from "@/modules/packs/hooks/use-packs-data"
 import { FilterValue } from "antd/es/table/interface"
@@ -43,22 +43,29 @@ export const PacksTable: React.FC<PacksTableProps> = ({
 
   return (
     <StyledTableWrapper>
-      <Table
-        size={"small"}
-        columns={columns}
-        dataSource={rows}
-        scroll={{ y: 390 }}
-        loading={isLoading}
-        pagination={false}
-        onChange={onChangeSort}
-      />
-      <Pagination
-        total={tableData.cardPacksTotalCount}
-        onChange={onChangePagination}
-        disabled={isLoading}
-        hideOnSinglePage
-        showQuickJumper
-      />
+      {isLoading ? (
+        <Skeleton active title={false} paragraph={{ rows: 15 }} />
+      ) : (
+        <>
+          {" "}
+          <Table
+            size={"small"}
+            columns={columns}
+            dataSource={rows}
+            scroll={{ y: 390 }}
+            loading={isLoading}
+            pagination={false}
+            onChange={onChangeSort}
+          />
+          <Pagination
+            total={tableData.cardPacksTotalCount}
+            onChange={onChangePagination}
+            disabled={isLoading}
+            hideOnSinglePage
+            showQuickJumper
+          />
+        </>
+      )}
     </StyledTableWrapper>
   )
 }
