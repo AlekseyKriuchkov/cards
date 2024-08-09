@@ -10,6 +10,16 @@ import {
 import { cardsApi } from "@/modules/cards/api/cards.api"
 import { createSlice } from "@reduxjs/toolkit"
 
+type InitialState = {
+  card: null | GetPackCardsResponseType
+  isLoading: boolean
+}
+
+const initialState: InitialState = {
+  card: null,
+  isLoading: false,
+}
+
 const setCards = createAppAsyncThunk("cards/get", (arg: GetPackCardsType) => {
   return cardsApi.getCards(arg).then((res) => {
     return { card: res.data }
@@ -47,10 +57,7 @@ const updateGrade = createAppAsyncThunk(
 
 const slice = createSlice({
   name: "pack",
-  initialState: {
-    card: null as null | GetPackCardsResponseType,
-    isLoading: false,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setCards.fulfilled, (state, action) => {

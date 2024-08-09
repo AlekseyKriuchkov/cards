@@ -11,6 +11,19 @@ import {
 } from "@/modules/auth/api/types"
 import { createAppAsyncThunk } from "@/utils/create-app-async-thunk"
 import { AxiosError } from "axios"
+
+type InitialState = {
+  user: User | null
+  isSuccess: boolean
+  isLoading: boolean
+}
+
+const initialState: InitialState = {
+  user: null,
+  isSuccess: false,
+  isLoading: false,
+}
+
 const register = createAppAsyncThunk("auth/register", (arg: RegisterType) => {
   return authApi.register(arg).then(() => {
     return { isSuccess: true }
@@ -63,11 +76,7 @@ const newPassword = createAppAsyncThunk(
 )
 const slice = createSlice({
   name: "auth",
-  initialState: {
-    user: null as User | null,
-    isSuccess: false as boolean,
-    isLoading: false,
-  },
+  initialState,
   reducers: {
     setIsSuccess: (state, action: PayloadAction<boolean>) => {
       state.isSuccess = action.payload

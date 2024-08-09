@@ -10,6 +10,16 @@ import {
   UpdateCardsPackType,
 } from "@/modules/packs/types"
 
+type InitialState = {
+  cards: null | CardPacksResponseType
+  isLoading: boolean
+}
+
+const initialState: InitialState = {
+  cards: null,
+  isLoading: false,
+}
+
 const setPacks = createAppAsyncThunk("packs/get", (arg: GetCardsPackType) => {
   return packsApi.getPacks(arg).then((res) => {
     return { payload: res.data }
@@ -38,10 +48,7 @@ const deletePack = createAppAsyncThunk(
 )
 const slice = createSlice({
   name: "cards",
-  initialState: {
-    cards: {} as CardPacksResponseType,
-    isLoading: false,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(setPacks.fulfilled, (state, action) => {
@@ -57,7 +64,7 @@ const slice = createSlice({
     builder.addCase(
       newPack.fulfilled,
       (state, action: PayloadAction<{ payload: PackResponseType }>) => {
-        state.cards.cardPacks.unshift(action.payload.payload.newCardsPack)
+        state.cards?.cardPacks.unshift(action.payload.payload.newCardsPack)
         state.isLoading = false
       },
     )
@@ -70,10 +77,10 @@ const slice = createSlice({
     builder.addCase(
       updateCardsPack.fulfilled,
       (state, action: PayloadAction<{ payload: PackResponseType }>) => {
-        const updatedCardIndex = state.cards.cardPacks.findIndex(
+        const updatedCardIndex = state.cards?.cardPacks.findIndex(
           (pack) => pack._id === action.payload.payload.updatedCardsPack._id,
         )
-        if (updatedCardIndex > -1) {
+        if (state.cards && updatedCardIndex && updatedCardIndex > -1) {
           state.cards.cardPacks[updatedCardIndex] =
             action.payload.payload.updatedCardsPack
         }
@@ -89,11 +96,11 @@ const slice = createSlice({
     builder.addCase(
       deletePack.fulfilled,
       (state, action: PayloadAction<{ payload: PackResponseType }>) => {
-        const deletedCardIndex = state.cards.cardPacks.findIndex(
+        const deletedCardIndex = state.cards?.cardPacks.findIndex(
           (pack) => pack._id === action.payload.payload.deletedCardsPack._id,
         )
-        if (deletedCardIndex > -1) {
-          state.cards.cardPacks.splice(deletedCardIndex, 1)
+        if (deletedCardIndex && deletedCardIndex > -1) {
+          state.cards?.cardPacks.splice(deletedCardIndex, 1)
         }
         state.isLoading = false
       },
