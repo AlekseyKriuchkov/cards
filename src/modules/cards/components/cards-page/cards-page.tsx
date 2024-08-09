@@ -20,7 +20,7 @@ export const CardsPage = () => {
 
   const [modalType, setModalType] = useState<CardsModalType>(null)
 
-  const [params, setParams] = useState<PacksParams>({
+  const [params] = useState<PacksParams>({
     packName: "",
     page: 1,
     pageCount: 10,
@@ -33,7 +33,7 @@ export const CardsPage = () => {
     if (id) {
       dispatch(cardsThunk.setCards({ cardsPack_id: id }))
     }
-  }, [])
+  }, [dispatch, id])
 
   const handleEditPack = (values: { name: string; private: boolean }) => {
     dispatch(
@@ -51,11 +51,12 @@ export const CardsPage = () => {
 
   const handleDeletePack = () => {
     dispatch(packsThunk.deletePack({ id: id || "" }))
-    console.log()
     setModalType(null)
   }
   return (
     <>
+      <CardsTableHeader setModalType={setModalType} />
+      <CardsTable />
       {modalType?.actionType === "edit" && (
         <CardsModal title={"Edit pack"} onClose={() => setModalType(null)}>
           <EditPackDialog
@@ -74,8 +75,6 @@ export const CardsPage = () => {
           />
         </CardsModal>
       )}
-      <CardsTableHeader setModalType={setModalType} />
-      <CardsTable />
     </>
   )
 }

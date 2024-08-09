@@ -23,9 +23,7 @@ export const LearnPage = () => {
 
   const randomCards = (cards: CardType[]) => {
     console.log(cards)
-    return [...cards].sort(
-      (card1, card2) => card2.shots / card2.grade - card1.shots / card1.grade,
-    )
+    return [...cards].sort((card1, card2) => card1.grade - card2.grade)
   }
 
   const sortedCards = randomCards(cardsData?.cards || [])

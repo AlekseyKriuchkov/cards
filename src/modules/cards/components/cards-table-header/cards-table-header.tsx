@@ -67,7 +67,7 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
         <StyledTableTitle>{data.card?.packName}</StyledTableTitle>
         <Space.Compact>
           <StyledHeaderPackButtons disabled={disabledLearnButton}>
-            Learn Pack
+            <NavLink to={`/learn/${id}`}>Learn Pack</NavLink>
           </StyledHeaderPackButtons>
         </Space.Compact>
       </StyledTableHeaderWrapper>
