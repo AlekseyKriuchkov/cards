@@ -3,26 +3,28 @@ import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form } from "antd"
 import { useNavigate } from "react-router-dom"
 import { StyledCheckEmailImage } from "@/modules/auth/pages/check-email/styles"
-// @ts-ignore
-import checkEmailImage from "@/assets/check-email-image.svg"
 import { StyledText } from "@/modules/auth/pages/styles"
 import { useAppDispatch } from "@/app/hooks"
 import { setIsSuccess } from "@/modules/auth/auth.slice"
+
 export const CheckEmail = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const timerId = setTimeout(() => {
       dispatch(setIsSuccess(false))
       navigate("/sign-in")
     }, 5000)
-    return clearTimeout(timer)
-  }, [])
+    return () => clearTimeout(timerId)
+  }, [dispatch, navigate])
 
   return (
     <StyledCard title={"Check Email"}>
-      <StyledCheckEmailImage src={checkEmailImage} alt="image" />
+      <StyledCheckEmailImage
+        src={"src/assets/check-email-image.svg"}
+        alt="image"
+      />
       <StyledText>We’ve sent an Email with instructions to</StyledText>
       <Form.Item>
         <Button
