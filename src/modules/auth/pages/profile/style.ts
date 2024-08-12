@@ -17,7 +17,7 @@ export const StyledProfileContainer = styled.div`
   align-items: center;
   width: 100%;
 `
-export const StyledAuthWidgetButton = styled(Button)`
+export const StyledLoginButton = styled(Button)`
   width: 100px;
   height: 35px;
 `
