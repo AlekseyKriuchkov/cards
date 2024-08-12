@@ -5,38 +5,46 @@ import { useAppSelector } from "@/app/hooks"
 import { Space } from "antd"
 import { StyledHeaderPackButtons } from "@/modules/cards/components/cards-table-header/styles"
 import { CardsModalType } from "@/modules/cards/types"
-import { NavLink, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 
 type PropsType = {
   setModalType: (ModalType: CardsModalType) => void
 }
 
 export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
-  const data = useAppSelector((state) => state.cards)
+  const navigate = useNavigate()
+
+  const cardsData = useAppSelector((state) => state.cards)
 
   const { id } = useParams()
 
   const isLoading = useAppSelector((state) => state.cards.isLoading)
 
-  const disabledLearnButton = isLoading ? true : !data.card?.cardsTotalCount
+  const disabledLearnButton = isLoading
+    ? true
+    : !cardsData.card?.cardsTotalCount
 
   const myId = useAppSelector((state) => state.auth.user?._id)
 
-  const isMyPack = myId === data.card?.packUserId
+  const isMyPack = myId === cardsData.card?.packUserId
+
+  const goToLearnHandler = () => {
+    navigate(`/learn/${id}`)
+  }
 
   if (isMyPack) {
     return (
       <div>
         <GoToButton text={"Go to Packs List"} />
         <StyledTableHeaderWrapper>
-          <StyledTableTitle>{data.card?.packName}</StyledTableTitle>
+          <StyledTableTitle>{cardsData.card?.packName}</StyledTableTitle>
           <Space.Compact>
             <StyledHeaderPackButtons
               onClick={() =>
                 setModalType({
                   actionType: "edit",
-                  packName: data.card?.packName,
-                  private: data.card?.packPrivate,
+                  packName: cardsData.card?.packName,
+                  private: cardsData.card?.packPrivate,
                 })
               }
               disabled={isLoading}
@@ -49,8 +57,11 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
             >
               Delete Pack
             </StyledHeaderPackButtons>
-            <StyledHeaderPackButtons disabled={disabledLearnButton}>
-              <NavLink to={`/learn/${id}`}>Learn Pack</NavLink>
+            <StyledHeaderPackButtons
+              disabled={disabledLearnButton}
+              onClick={goToLearnHandler}
+            >
+              Learn Pack
             </StyledHeaderPackButtons>
             <StyledHeaderPackButtons onClick={() => {}} disabled={isLoading}>
               Add New Card
@@ -64,10 +75,13 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
     <div>
       <GoToButton text={"Go to Packs List"} />
       <StyledTableHeaderWrapper>
-        <StyledTableTitle>{data.card?.packName}</StyledTableTitle>
+        <StyledTableTitle>{cardsData.card?.packName}</StyledTableTitle>
         <Space.Compact>
-          <StyledHeaderPackButtons disabled={disabledLearnButton}>
-            <NavLink to={`/learn/${id}`}>Learn Pack</NavLink>
+          <StyledHeaderPackButtons
+            disabled={disabledLearnButton}
+            onClick={goToLearnHandler}
+          >
+            Learn Pack
           </StyledHeaderPackButtons>
         </Space.Compact>
       </StyledTableHeaderWrapper>
