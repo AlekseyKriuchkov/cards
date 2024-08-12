@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit"
 import { authApi } from "@/modules/auth/api/auth.api"
 import {
   AuthMeUpdate,
@@ -14,19 +14,23 @@ import { AxiosError } from "axios"
 
 type InitialState = {
   user: User | null
-  isSuccess: boolean
+  isNewPasswordSuccess: boolean
+  isForgotSuccess: boolean
+  isRegisterSuccess: boolean
   isLoading: boolean
 }
 
 const initialState: InitialState = {
   user: null,
-  isSuccess: false,
+  isNewPasswordSuccess: false,
+  isForgotSuccess: false,
+  isRegisterSuccess: false,
   isLoading: false,
 }
 
 const register = createAppAsyncThunk("auth/register", (arg: RegisterType) => {
   return authApi.register(arg).then(() => {
-    return { isSuccess: true }
+    return { isRegisterSuccess: true }
   })
 })
 const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
@@ -41,9 +45,7 @@ const login = createAppAsyncThunk("auth/login", async (arg: LoginType) => {
     })
 })
 const logOut = createAppAsyncThunk("auth/logOut", async (arg: {}) => {
-  return authApi.authMeLogOut(arg).then((res) => {
-    console.log(res)
-  })
+  return authApi.authMeLogOut(arg).then(() => {})
 })
 const authMe = createAppAsyncThunk("authMe/me", async () => {
   return authApi.authMe().then((res) => {
@@ -62,7 +64,7 @@ const forgot = createAppAsyncThunk(
   "authMe/forgot",
   (arg: ForgotPasswordType) => {
     return authApi.forgot(arg).then(() => {
-      return { isSuccess: true }
+      return { isForgotSuccess: true }
     })
   },
 )
@@ -70,21 +72,18 @@ const newPassword = createAppAsyncThunk(
   "authMe/newPassword",
   (arg: NewPasswordType) => {
     return authApi.setNewPassword(arg).then(() => {
-      return { isSuccess: true }
+      return { isNewPasswordSuccess: true }
     })
   },
 )
 const slice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    setIsSuccess: (state, action: PayloadAction<boolean>) => {
-      state.isSuccess = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(register.fulfilled, (state, action) => {
-      if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+      if (action.payload.isRegisterSuccess)
+        state.isRegisterSuccess = action.payload.isRegisterSuccess
       state.isLoading = false
     })
     builder.addCase(register.pending, (state) => {
@@ -122,14 +121,16 @@ const slice = createSlice({
       state.isLoading = true
     })
     builder.addCase(forgot.fulfilled, (state, action) => {
-      if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+      if (action.payload.isForgotSuccess)
+        state.isForgotSuccess = action.payload.isForgotSuccess
       state.isLoading = false
     })
     builder.addCase(forgot.pending, (state) => {
       state.isLoading = true
     })
     builder.addCase(newPassword.fulfilled, (state, action) => {
-      if (action.payload.isSuccess) state.isSuccess = action.payload.isSuccess
+      if (action.payload.isNewPasswordSuccess)
+        state.isNewPasswordSuccess = action.payload.isNewPasswordSuccess
       state.isLoading = false
     })
     builder.addCase(newPassword.pending, (state) => {
@@ -140,7 +141,7 @@ const slice = createSlice({
 
 export const authReducer = slice.reducer
 
-export const { setIsSuccess } = slice.actions
+// export const { setIsSuccess } = slice.actions
 
 export const authThunk = {
   register,

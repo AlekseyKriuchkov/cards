@@ -10,7 +10,7 @@ import { forgotPasswordTemplateMessage } from "@/modules/auth/pages/forgot-passw
 
 export const ForgotPassword = () => {
   const dispatch = useAppDispatch()
-  const isSuccess = useAppSelector((state) => state.auth.isSuccess)
+  const isSuccess = useAppSelector((state) => state.auth.isForgotSuccess)
   const isLoading = useAppSelector((state) => state.auth.isLoading)
 
   const sendMessageHandler = (values: { email: string }) => {

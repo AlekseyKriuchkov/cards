@@ -23,6 +23,7 @@ export const PacksTableToolbar: React.FC<PropsType> = ({
   handleSetTableSlider,
 }) => {
   const isLoading = useAppSelector((state) => state.packs.isLoading)
+
   const onSearch = (value: string) => {
     handleSearch(value)
   }

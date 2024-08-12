@@ -10,23 +10,24 @@ export const NewPassword = () => {
   const { token } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isSuccess = useAppSelector((state) => state.auth.isSuccess)
+  const isSuccess = useAppSelector((state) => state.auth.isNewPasswordSuccess)
 
-  const setNewPassword = async (values: NewPasswordType) => {
+  const setNewPassword = (values: NewPasswordType) => {
     dispatch(authThunk.newPassword({ ...values, resetPasswordToken: token }))
   }
+
   if (isSuccess) {
     navigate("/sign-in")
   }
 
   return (
-    <StyledCard title={"Create new password!"}>
+    <StyledCard title="Create new password!">
       <Form onFinish={setNewPassword}>
         <Form.Item name="password">
-          <Input.Password placeholder={"Password"} />
+          <Input.Password placeholder="Password" />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" size={"large"} block={true}>
+          <Button type="primary" htmlType="submit" size="large" block>
             Submit
           </Button>
         </Form.Item>

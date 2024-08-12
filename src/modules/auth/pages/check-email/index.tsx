@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 import { StyledCheckEmailImage } from "@/modules/auth/pages/check-email/styles"
 import { StyledText } from "@/modules/auth/pages/styles"
 import { useAppDispatch } from "@/app/hooks"
-import { setIsSuccess } from "@/modules/auth/auth.slice"
 
 export const CheckEmail = () => {
   const navigate = useNavigate()
@@ -13,7 +12,6 @@ export const CheckEmail = () => {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      dispatch(setIsSuccess(false))
       navigate("/sign-in")
     }, 5000)
     return () => clearTimeout(timerId)
