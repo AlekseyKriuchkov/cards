@@ -4,18 +4,16 @@ import { Button, Form } from "antd"
 import { useNavigate } from "react-router-dom"
 import { StyledCheckEmailImage } from "@/modules/auth/pages/check-email/styles"
 import { StyledText } from "@/modules/auth/pages/styles"
-import { useAppDispatch } from "@/app/hooks"
 
 export const CheckEmail = () => {
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
 
   useEffect(() => {
     const timerId = setTimeout(() => {
       navigate("/sign-in")
     }, 5000)
     return () => clearTimeout(timerId)
-  }, [dispatch, navigate])
+  }, [navigate])
 
   return (
     <StyledCard title={"Check Email"}>

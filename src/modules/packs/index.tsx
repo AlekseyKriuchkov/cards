@@ -8,11 +8,13 @@ import { useAppSelector } from "@/app/hooks"
 export const PacksPage = () => {
   const isAuthorized = useAppSelector((state) => !!state.auth.user)
   const navigate = useNavigate()
+
   useEffect(() => {
     if (!isAuthorized) {
       navigate("/sign-in")
     }
-  }, [isAuthorized])
+  }, [isAuthorized, navigate])
+
   return (
     <>
       <PacksTableHeader />

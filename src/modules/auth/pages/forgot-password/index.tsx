@@ -5,12 +5,12 @@ import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form, Input, Skeleton } from "antd"
 import { StyledNavLink } from "@/modules/auth/styles"
 import { StyledP, StyledText } from "@/modules/auth/pages/styles"
-import { CheckEmail } from "@/modules/auth/pages"
 import { forgotPasswordTemplateMessage } from "@/modules/auth/pages/forgot-password/forgot-password-template-message"
+import { useNavigate } from "react-router-dom"
 
 export const ForgotPassword = () => {
   const dispatch = useAppDispatch()
-  const isSuccess = useAppSelector((state) => state.auth.isForgotSuccess)
+  const navigate = useNavigate()
   const isLoading = useAppSelector((state) => state.auth.isLoading)
 
   const sendMessageHandler = (values: { email: string }) => {
@@ -20,10 +20,10 @@ export const ForgotPassword = () => {
         message: forgotPasswordTemplateMessage,
       }),
     )
-  }
-
-  if (isSuccess) {
-    return <CheckEmail />
+      .unwrap()
+      .then(() => {
+        navigate("/check-email")
+      })
   }
 
   return (

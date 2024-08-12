@@ -42,7 +42,7 @@ export const PacksClearFiltersButton: React.FC<ParamsPropsType> = ({
     })
   }
   return (
-    <Button disabled={isLoading} type={"text"} onClick={clearFilters}>
+    <Button disabled={isLoading} type="text" onClick={clearFilters}>
       Clear filters
     </Button>
   )

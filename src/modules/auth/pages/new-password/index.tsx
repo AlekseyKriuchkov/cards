@@ -2,7 +2,7 @@ import React from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
 import { Button, Form, Input } from "antd"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { useAppDispatch } from "@/app/hooks"
 import { authThunk } from "@/modules/auth/auth.slice"
 import { NewPasswordType } from "@/modules/auth/api/types"
 
@@ -10,14 +10,13 @@ export const NewPassword = () => {
   const { token } = useParams()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const isSuccess = useAppSelector((state) => state.auth.isNewPasswordSuccess)
 
   const setNewPassword = (values: NewPasswordType) => {
     dispatch(authThunk.newPassword({ ...values, resetPasswordToken: token }))
-  }
-
-  if (isSuccess) {
-    navigate("/sign-in")
+      .unwrap()
+      .then(() => {
+        navigate("/sign-in")
+      })
   }
 
   return (

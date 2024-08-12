@@ -1,5 +1,5 @@
 import React from "react"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { useAppDispatch } from "@/app/hooks"
 import { LoginType } from "@/modules/auth/api/types"
 import { authThunk } from "@/modules/auth/auth.slice"
 import { StyledCard } from "@/modules/auth/pages/sign-in/styles"
@@ -12,14 +12,13 @@ export const SignUp = () => {
   const { isLoading } = useAuth()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const isSuccess = useAppSelector((state) => state.auth.isRegisterSuccess)
-
-  if (isSuccess) {
-    navigate("/sign-in")
-  }
 
   const onRegisterHandler = (values: LoginType) => {
     dispatch(authThunk.register(values))
+      .unwrap()
+      .then(() => {
+        navigate("/sign-in")
+      })
   }
 
   if (isLoading) {

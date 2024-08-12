@@ -14,17 +14,11 @@ import { AxiosError } from "axios"
 
 type InitialState = {
   user: User | null
-  isNewPasswordSuccess: boolean
-  isForgotSuccess: boolean
-  isRegisterSuccess: boolean
   isLoading: boolean
 }
 
 const initialState: InitialState = {
   user: null,
-  isNewPasswordSuccess: false,
-  isForgotSuccess: false,
-  isRegisterSuccess: false,
   isLoading: false,
 }
 
@@ -81,9 +75,7 @@ const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(register.fulfilled, (state, action) => {
-      if (action.payload.isRegisterSuccess)
-        state.isRegisterSuccess = action.payload.isRegisterSuccess
+    builder.addCase(register.fulfilled, (state) => {
       state.isLoading = false
     })
     builder.addCase(register.pending, (state) => {
@@ -120,17 +112,13 @@ const slice = createSlice({
     builder.addCase(logOut.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(forgot.fulfilled, (state, action) => {
-      if (action.payload.isForgotSuccess)
-        state.isForgotSuccess = action.payload.isForgotSuccess
+    builder.addCase(forgot.fulfilled, (state) => {
       state.isLoading = false
     })
     builder.addCase(forgot.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(newPassword.fulfilled, (state, action) => {
-      if (action.payload.isNewPasswordSuccess)
-        state.isNewPasswordSuccess = action.payload.isNewPasswordSuccess
+    builder.addCase(newPassword.fulfilled, (state) => {
       state.isLoading = false
     })
     builder.addCase(newPassword.pending, (state) => {
