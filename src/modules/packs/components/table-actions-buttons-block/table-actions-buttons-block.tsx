@@ -9,6 +9,7 @@ import {
   PacksTableActionsBlockStyledWrapper,
 } from "@/modules/packs/components/table-actions-buttons-block/styles"
 import { PacksModalType } from "@/modules/packs/types"
+import { useNavigate } from "react-router-dom"
 
 type PropsType = {
   isMyPack: boolean
@@ -27,6 +28,7 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
   cardsCount,
   onActionClick,
 }) => {
+  const navigate = useNavigate()
   const deleteHandler = () => {
     onActionClick({
       actionType: "delete",
@@ -34,6 +36,7 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
       packName: pack_name,
     })
   }
+
   const editHandler = () => {
     onActionClick({
       actionType: "edit",
@@ -42,14 +45,9 @@ export const TableActionsButtonsBlock: React.FC<PropsType> = ({
       private: private_pack,
     })
   }
+
   const learnHandler = () => {
-    // dispatch(
-    //   setModalType({
-    //     modalType: "learn",
-    //     pack_id: pack_id,
-    //     pack_name: pack_name,
-    //   }),
-    // )
+    navigate(`/learn/${pack_id}`)
   }
 
   const disabledButton = !cardsCount
