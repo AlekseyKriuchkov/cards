@@ -69,7 +69,7 @@ export type UpdateCardRequestType = {
 }
 
 export type CardsModalType = {
-  actionType: "delete" | "edit"
+  actionType: "delete" | "edit" | "addNewCard"
   packId?: string
   packName?: string
   private?: boolean

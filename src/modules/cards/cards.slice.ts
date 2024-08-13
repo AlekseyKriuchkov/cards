@@ -69,6 +69,10 @@ const slice = createSlice({
     })
     builder.addCase(newCard.fulfilled, (state, action) => {
       state.card = action.payload.card
+      state.isLoading = false
+    })
+    builder.addCase(newCard.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(deleteCard.fulfilled, (state, action) => {
       state.card = action.payload.card

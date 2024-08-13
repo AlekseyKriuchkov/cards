@@ -8,8 +8,9 @@ import { CardsModalType } from "@/modules/cards/types"
 import { PacksParams } from "@/modules/packs/types"
 import { packsThunk } from "@/modules/packs/packs.slice"
 import { CardsModal } from "@/shared/modal"
-import { EditPackDialog } from "@/shared/edit-pack-modal/edit-pack-dialog"
-import { DeletePackConfirmationDialog } from "@/shared/delete-pack-modal/delete-pack-confirmation-dialog"
+import { EditPackDialog } from "@/shared/edit-pack-dialog/edit-pack-dialog"
+import { DeletePackConfirmationDialog } from "@/shared/delete-pack-dialog/delete-pack-confirmation-dialog"
+import { AddNewCardDialog } from "@/modules/cards/components/add-new-card-dialog/add-new-card-dialog"
 
 export const CardsPage = () => {
   const { id } = useParams()
@@ -31,9 +32,9 @@ export const CardsPage = () => {
 
   useEffect(() => {
     if (id) {
-      dispatch(cardsThunk.setCards({ cardsPack_id: id }))
+      dispatch(cardsThunk.setCards({ ...params, cardsPack_id: id }))
     }
-  }, [dispatch, id])
+  }, [dispatch, id, params])
 
   const handleEditPack = (values: { name: string; private: boolean }) => {
     dispatch(
@@ -53,6 +54,20 @@ export const CardsPage = () => {
     dispatch(packsThunk.deletePack({ id: id || "" }))
     setModalType(null)
   }
+
+  const handleAddNewCard = (values: { question: string; answer: string }) => {
+    dispatch(
+      cardsThunk.newCard({
+        card: {
+          cardsPack_id: id || "",
+          question: values.question,
+          answer: values.answer,
+        },
+      }),
+    )
+    setModalType(null)
+  }
+
   return (
     <>
       <CardsTableHeader setModalType={setModalType} />
@@ -72,6 +87,14 @@ export const CardsPage = () => {
             packName={modalType.packName ? modalType.packName : ""}
             onSubmit={() => handleDeletePack()}
             onCancel={() => setModalType(null)}
+          />
+        </CardsModal>
+      )}
+      {modalType?.actionType === "addNewCard" && (
+        <CardsModal title={"Add New Card"} onClose={() => setModalType(null)}>
+          <AddNewCardDialog
+            onCancel={() => setModalType(null)}
+            onSubmit={(values) => handleAddNewCard(values)}
           />
         </CardsModal>
       )}

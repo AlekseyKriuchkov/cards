@@ -1,7 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Slider } from "antd"
-import { useAppDispatch, useAppSelector } from "@/app/hooks"
-import { packsThunk } from "@/modules/packs/packs.slice"
+import { useAppSelector } from "@/app/hooks"
 import { PacksParams } from "@/modules/packs/types"
 
 type PropsType = {
@@ -12,10 +11,7 @@ type PropsType = {
 
 export const PacksToolbarSlider: React.FC<PropsType> = ({
   handleSetTableSlider,
-  params,
-  setParams,
 }) => {
-  console.log(params.min)
   const data = useAppSelector((state) => state.packs.cards)
   const isLoading = useAppSelector((state) => state.packs.isLoading)
 

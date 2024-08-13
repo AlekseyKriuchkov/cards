@@ -4,8 +4,8 @@ import { PacksModalType, PacksParams } from "@/modules/packs/types"
 import { useSearchParams } from "react-router-dom"
 import { packsThunk } from "@/modules/packs/packs.slice"
 import { CardsModal } from "@/shared/modal"
-import { DeletePackConfirmationDialog } from "@/shared/delete-pack-modal/delete-pack-confirmation-dialog"
-import { EditPackDialog } from "@/shared/edit-pack-modal/edit-pack-dialog"
+import { DeletePackConfirmationDialog } from "@/shared/delete-pack-dialog/delete-pack-confirmation-dialog"
+import { EditPackDialog } from "@/shared/edit-pack-dialog/edit-pack-dialog"
 import { PacksTableToolbar } from "@/modules/packs/components/packs-table-toolbar/packs-table-toolbar"
 import { PacksTable } from "@/modules/packs/components/packs-table/packs-table"
 import { useAuth } from "@/modules/auth/hooks/useAuth"
@@ -79,7 +79,6 @@ export const PacksTableTemplate = () => {
     if (!isParamsChecked) {
       return
     }
-
     dispatch(
       packsThunk.setPacks({
         ...params,

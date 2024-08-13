@@ -16,7 +16,7 @@ export const cardsApi = {
     return cardsInstance.get<GetPackCardsResponseType>("", { params })
   },
   newCard: (params: NewCardRequestType) => {
-    return cardsInstance.post("", { params })
+    return cardsInstance.post("", params)
   },
   deleteCard: (params: DeleteCardRequestType) => {
     return cardsInstance.delete("", { params })

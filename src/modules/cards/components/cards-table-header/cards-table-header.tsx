@@ -63,7 +63,12 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
             >
               Learn Pack
             </StyledHeaderPackButtons>
-            <StyledHeaderPackButtons onClick={() => {}} disabled={isLoading}>
+            <StyledHeaderPackButtons
+              onClick={() => {
+                setModalType({ actionType: "addNewCard" })
+              }}
+              disabled={isLoading}
+            >
               Add New Card
             </StyledHeaderPackButtons>
           </Space.Compact>
