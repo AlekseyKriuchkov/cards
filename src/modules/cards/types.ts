@@ -51,6 +51,27 @@ export type NewCardRequestType = {
     answerVideo?: string
   }
 }
+
+export type NewCardResponseType = {
+  newCard: {
+    cardsPack_id: string
+    user_id: string
+    question: string
+    answer: string
+    grade: number
+    shots: number
+    comments: string
+    type: string
+    rating: number
+    more_id: string
+    _id: string
+    created: string
+    updated: string
+    __v: number
+  }
+  token: string
+  tokenDeathTime: number
+}
 export type DeleteCardRequestType = {
   id: string
 }
