@@ -2,23 +2,25 @@ import { GoToButton } from "@/shared/go-to-button/go-to-button"
 import { StyledTableHeaderWrapper, StyledTableTitle } from "@/shared/styles"
 import React from "react"
 import { useAppSelector } from "@/app/hooks"
-import { Space } from "antd"
+import { Skeleton, Space } from "antd"
 import { StyledHeaderPackButtons } from "@/modules/cards/components/cards-table-header/styles"
 import { CardsModalType } from "@/modules/cards/types"
 import { useNavigate, useParams } from "react-router-dom"
 
 type PropsType = {
   setModalType: (ModalType: CardsModalType) => void
+  isLoading: boolean
 }
 
-export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
+export const CardsTableHeader: React.FC<PropsType> = ({
+  setModalType,
+  isLoading,
+}) => {
   const navigate = useNavigate()
 
   const cardsData = useAppSelector((state) => state.cards)
 
   const { id } = useParams()
-
-  const isLoading = useAppSelector((state) => state.cards.isLoading)
 
   const disabledLearnButton = isLoading
     ? true
@@ -34,10 +36,14 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
 
   if (isMyPack) {
     return (
-      <div>
+      <>
         <GoToButton text={"Go to Packs List"} />
         <StyledTableHeaderWrapper>
-          <StyledTableTitle>{cardsData.card?.packName}</StyledTableTitle>
+          {isLoading ? (
+            <Skeleton.Input />
+          ) : (
+            <StyledTableTitle>{cardsData.card?.packName}</StyledTableTitle>
+          )}
           <Space.Compact>
             <StyledHeaderPackButtons
               onClick={() =>
@@ -73,11 +79,11 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
             </StyledHeaderPackButtons>
           </Space.Compact>
         </StyledTableHeaderWrapper>
-      </div>
+      </>
     )
   }
   return (
-    <div>
+    <>
       <GoToButton text={"Go to Packs List"} />
       <StyledTableHeaderWrapper>
         <StyledTableTitle>{cardsData.card?.packName}</StyledTableTitle>
@@ -90,6 +96,6 @@ export const CardsTableHeader: React.FC<PropsType> = ({ setModalType }) => {
           </StyledHeaderPackButtons>
         </Space.Compact>
       </StyledTableHeaderWrapper>
-    </div>
+    </>
   )
 }

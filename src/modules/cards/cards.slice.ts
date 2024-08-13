@@ -27,6 +27,7 @@ const setCards = createAppAsyncThunk("cards/get", (arg: GetPackCardsType) => {
 })
 const newCard = createAppAsyncThunk("cards/post", (arg: NewCardRequestType) => {
   return cardsApi.newCard(arg).then((res) => {
+    console.log(res)
     return { card: res.data }
   })
 })
@@ -68,7 +69,7 @@ const slice = createSlice({
       state.isLoading = true
     })
     builder.addCase(newCard.fulfilled, (state, action) => {
-      state.card = action.payload.card
+      state.card?.cards.unshift(action.payload.card.newCard)
       state.isLoading = false
     })
     builder.addCase(newCard.pending, (state) => {

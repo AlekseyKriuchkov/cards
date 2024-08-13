@@ -7,6 +7,7 @@ import {
   GetPackCardsResponseType,
   GetPackCardsType,
   NewCardRequestType,
+  NewCardResponseType,
   UpdateCardGradeRequestType,
   UpdateCardRequestType,
 } from "@/modules/cards/types"
@@ -16,7 +17,7 @@ export const cardsApi = {
     return cardsInstance.get<GetPackCardsResponseType>("", { params })
   },
   newCard: (params: NewCardRequestType) => {
-    return cardsInstance.post("", params)
+    return cardsInstance.post<NewCardResponseType>("", params)
   },
   deleteCard: (params: DeleteCardRequestType) => {
     return cardsInstance.delete("", { params })

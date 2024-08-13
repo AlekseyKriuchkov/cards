@@ -7,8 +7,6 @@ import { useAppSelector } from "@/app/hooks"
 export const CardsTable = () => {
   const { rows, otherColumns, myPackColumns } = UseCardsData()
 
-  const isLoading = useAppSelector((state) => state.cards.isLoading)
-
   const data = useAppSelector((state) => state.cards)
 
   const myId = useAppSelector((state) => state.auth.user?._id)
@@ -33,7 +31,6 @@ export const CardsTable = () => {
         style={{ marginTop: "30px" }}
         columns={suitableColumns}
         dataSource={rows}
-        loading={isLoading}
       />
     </>
   )

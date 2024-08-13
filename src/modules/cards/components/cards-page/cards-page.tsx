@@ -11,11 +11,18 @@ import { CardsModal } from "@/shared/modal"
 import { EditPackDialog } from "@/shared/edit-pack-dialog/edit-pack-dialog"
 import { DeletePackConfirmationDialog } from "@/shared/delete-pack-dialog/delete-pack-confirmation-dialog"
 import { AddNewCardDialog } from "@/modules/cards/components/add-new-card-dialog/add-new-card-dialog"
+import { Skeleton } from "antd"
 
 export const CardsPage = () => {
   const { id } = useParams()
 
   const dispatch = useAppDispatch()
+
+  const isCardsLoading = useAppSelector((state) => state.cards.isLoading)
+
+  const isPacksLoading = useAppSelector((state) => state.packs.isLoading)
+
+  const isLoading = isCardsLoading || isPacksLoading
 
   const data = useAppSelector((state) => state.packs.cards)
 
@@ -70,8 +77,8 @@ export const CardsPage = () => {
 
   return (
     <>
-      <CardsTableHeader setModalType={setModalType} />
-      <CardsTable />
+      <CardsTableHeader isLoading={isLoading} setModalType={setModalType} />
+      {isLoading ? <Skeleton paragraph={{ rows: 15 }} /> : <CardsTable />}
       {modalType?.actionType === "edit" && (
         <CardsModal title={"Edit pack"} onClose={() => setModalType(null)}>
           <EditPackDialog
