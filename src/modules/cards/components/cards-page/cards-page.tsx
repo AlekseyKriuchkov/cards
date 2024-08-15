@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { cardsThunk } from "@/modules/cards/cards.slice"
 import { CardsTableHeader } from "@/modules/cards/components/cards-table-header/cards-table-header"
 import { CardsTable } from "@/modules/cards/components/cards-table/cards-table"
-import { CardsModalType } from "@/modules/cards/types"
+import { CardsModalType, PacksModalType } from "@/modules/cards/types"
 import { PacksParams } from "@/modules/packs/types"
 import { packsThunk } from "@/modules/packs/packs.slice"
 import { CardsModal } from "@/shared/modal"
@@ -12,6 +12,7 @@ import { EditPackDialog } from "@/shared/edit-pack-dialog/edit-pack-dialog"
 import { DeletePackConfirmationDialog } from "@/shared/delete-pack-dialog/delete-pack-confirmation-dialog"
 import { AddNewCardDialog } from "@/modules/cards/components/add-new-card-dialog/add-new-card-dialog"
 import { Skeleton } from "antd"
+import { EditCardDialog } from "@/modules/cards/components/edit-card-dialog/edit-card-dialog"
 
 export const CardsPage = () => {
   const { id } = useParams()
@@ -26,7 +27,9 @@ export const CardsPage = () => {
 
   const data = useAppSelector((state) => state.packs.cards)
 
-  const [modalType, setModalType] = useState<CardsModalType>(null)
+  const [modalType, setModalType] = useState<PacksModalType>(null)
+
+  const [cardModalType, setCardModalType] = useState<CardsModalType>(null)
 
   const [params] = useState<PacksParams>({
     packName: "",
@@ -75,10 +78,36 @@ export const CardsPage = () => {
     setModalType(null)
   }
 
+  const handleEditCard = (values: { question: string; answer: string }) => {
+    dispatch(
+      cardsThunk.updateCard({
+        card: {
+          _id: cardModalType?.cardId || "",
+          question: values.question,
+          answer: values.answer,
+        },
+      }),
+    )
+    setCardModalType(null)
+  }
+
   return (
     <>
       <CardsTableHeader isLoading={isLoading} setModalType={setModalType} />
-      {isLoading ? <Skeleton paragraph={{ rows: 15 }} /> : <CardsTable />}
+      {isLoading ? (
+        <Skeleton paragraph={{ rows: 15 }} />
+      ) : (
+        <CardsTable setCardModalType={setCardModalType} />
+      )}
+      {cardModalType?.actionType === "edit" && (
+        <CardsModal title={"Edit card"} onClose={() => setCardModalType(null)}>
+          <EditCardDialog
+            cardModalType={cardModalType}
+            onCancel={() => setCardModalType(null)}
+            onSubmit={(values) => handleEditCard(values)}
+          />
+        </CardsModal>
+      )}
       {modalType?.actionType === "edit" && (
         <CardsModal title={"Edit pack"} onClose={() => setModalType(null)}>
           <EditPackDialog

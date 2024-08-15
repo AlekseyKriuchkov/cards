@@ -2,8 +2,11 @@ import React from "react"
 import { useAppSelector } from "@/app/hooks"
 import { Rate } from "antd"
 import { CardsTableActionsBlock } from "@/modules/cards/components/cards-table-actions-block/cards-table-actions-block"
+import { CardsModalType } from "@/modules/cards/types"
 
-export const UseCardsData = () => {
+export const UseCardsData = (
+  setCardModalType: (modalData: CardsModalType) => void,
+) => {
   const tableData = useAppSelector((state) => state.cards.card?.cards)
 
   const otherColumns = [
@@ -62,7 +65,14 @@ export const UseCardsData = () => {
       answer: card.answer,
       updated: formatDate(card.updated),
       grade: <Rate defaultValue={card.grade} />,
-      action: <CardsTableActionsBlock />,
+      action: (
+        <CardsTableActionsBlock
+          cardId={card._id}
+          setCardModalType={setCardModalType}
+          question={card.question}
+          answer={card.answer}
+        />
+      ),
     }
   })
 

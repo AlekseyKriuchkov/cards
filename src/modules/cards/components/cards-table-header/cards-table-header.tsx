@@ -4,11 +4,11 @@ import React from "react"
 import { useAppSelector } from "@/app/hooks"
 import { Skeleton, Space } from "antd"
 import { StyledHeaderPackButtons } from "@/modules/cards/components/cards-table-header/styles"
-import { CardsModalType } from "@/modules/cards/types"
+import { PacksModalType } from "@/modules/cards/types"
 import { useNavigate, useParams } from "react-router-dom"
 
 type PropsType = {
-  setModalType: (ModalType: CardsModalType) => void
+  setModalType: (ModalType: PacksModalType) => void
   isLoading: boolean
 }
 

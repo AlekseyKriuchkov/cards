@@ -1,11 +1,16 @@
-import React from "react"
 import Search from "antd/es/input/Search"
 import { UseCardsData } from "@/modules/cards/hooks/use-cards-data"
 import { Table } from "antd"
 import { useAppSelector } from "@/app/hooks"
+import { CardsModalType } from "@/modules/cards/types"
+import React from "react"
 
-export const CardsTable = () => {
-  const { rows, otherColumns, myPackColumns } = UseCardsData()
+type PropsType = {
+  setCardModalType: (modalData: CardsModalType) => void
+}
+
+export const CardsTable: React.FC<PropsType> = ({ setCardModalType }) => {
+  const { rows, otherColumns, myPackColumns } = UseCardsData(setCardModalType)
 
   const data = useAppSelector((state) => state.cards)
 
