@@ -89,11 +89,39 @@ export type UpdateCardRequestType = {
   }
 }
 
-export type CardsModalType = {
+export type UpdateCardResponseType = {
+  updatedCard: {
+    _id: string
+    cardsPack_id: string
+    user_id: string
+    question: string
+    answer: string
+    grade: number
+    shots: number
+    comments: string
+    type: string
+    rating: number
+    more_id: string
+    created: string
+    updated: string
+    __v: number
+  }
+  token: string
+  tokenDeathTime: number
+}
+
+export type PacksModalType = {
   actionType: "delete" | "edit" | "addNewCard"
   packId?: string
   packName?: string
   private?: boolean
+} | null
+
+export type CardsModalType = {
+  actionType: "delete" | "edit"
+  cardId?: string
+  answer?: string
+  question?: string
 } | null
 
 export type UpdateCardGradeRequestType = {

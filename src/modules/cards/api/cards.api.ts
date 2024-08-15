@@ -10,6 +10,7 @@ import {
   NewCardResponseType,
   UpdateCardGradeRequestType,
   UpdateCardRequestType,
+  UpdateCardResponseType,
 } from "@/modules/cards/types"
 
 export const cardsApi = {
@@ -23,7 +24,7 @@ export const cardsApi = {
     return cardsInstance.delete("", { params })
   },
   updateCard: (params: UpdateCardRequestType) => {
-    return cardsInstance.put("", { params })
+    return cardsInstance.put<UpdateCardResponseType>("", params)
   },
   updateGrade: (params: UpdateCardGradeRequestType) => {
     return updateGradeInstance.put("", params)

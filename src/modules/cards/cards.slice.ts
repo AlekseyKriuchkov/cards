@@ -79,7 +79,20 @@ const slice = createSlice({
       state.card = action.payload.card
     })
     builder.addCase(updateCard.fulfilled, (state, action) => {
-      state.card = action.payload.card
+      const updatedCardIndex = state.card?.cards.findIndex(
+        (card) => card._id === action.payload.card.updatedCard._id,
+      )
+      if (
+        updatedCardIndex !== undefined &&
+        updatedCardIndex > -1 &&
+        state.card !== null
+      ) {
+        state.card.cards[updatedCardIndex] = action.payload.card.updatedCard
+      }
+      state.isLoading = false
+    })
+    builder.addCase(updateCard.pending, (state) => {
+      state.isLoading = true
     })
     builder.addCase(updateGrade.fulfilled, (state, action) => {
       const updatedCardIndex = state.card?.cards.findIndex(
